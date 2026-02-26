@@ -1,280 +1,393 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="auto">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="color-scheme" content="light dark"/>
-<meta name="darkreader-lock"/>
-<title>OniT — Частный технический специалист</title>
-<meta name="description" content="OniT — частный технический специалист. ПК, смартфоны, настройка, дизайн. Быстро, аккуратно, честная цена."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
-<style>
-/* ═══════════════════════════════════════════════════════
-   VARIABLES
-═══════════════════════════════════════════════════════ */
-:root{
-  --bg:#fafafa;--bg2:#f2f2f2;--card:#fff;
-  --border:#e2e2e2;--text:#0d0d0d;--text2:#5c5c5c;--muted:#aaa;
-  --sh-sm:0 2px 10px rgba(0,0,0,.05);
-  --sh-md:0 8px 28px rgba(0,0,0,.09);
-  --sh-lg:0 24px 60px rgba(0,0,0,.13);
-  --r:20px;--rsm:12px;
-  --fd:'Syne',sans-serif;--fb:'DM Sans',system-ui,sans-serif;
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="darkreader-lock"/>
+  <title>OniT — Частный технический специалист</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+
+  <!--
+  ═══════════════════════════════════════════════════════════════
+  КАК ДОБАВИТЬ КОНТАКТЫ:
+  ───────────────────────────────────────────────────────────────
+  WhatsApp  → найди wa.me/YOURPHONE → замени YOURPHONE на номер
+              без + и пробелов. Пример: wa.me/37200000000
+
+  Telegram  → найди t.me/YOURUSERNAME → замени на ник без @
+              Пример: t.me/onit_tech
+
+  Instagram → найди instagram.com/YOURUSERNAME → замени
+  Facebook  → найди facebook.com/YOURPAGE → замени
+
+  Форма на email (бесплатно через Formspree):
+  1. Зайди на formspree.io, зарегистрируйся
+  2. Создай форму → получи ID (например: xpwzgknb)
+  3. В теге <form id="contactForm" добавь:
+     action="https://formspree.io/f/ТВОй_ID" method="POST"
+  4. Удали onsubmit="handleSubmit(event)"
+  5. Письма будут приходить на почту — бесплатно!
+  ═══════════════════════════════════════════════════════════════
+  -->
+
+  <style>
+/* ══ VARIABLES ════════════════════════════════════════════════ */
+:root {
+  --bg:     #f9f9f9;
+  --bg2:    #f1f1f1;
+  --card:   #ffffff;
+  --border: #e2e2e2;
+  --text:   #0d0d0d;
+  --text2:  #5c5c5c;
+  --muted:  #a8a8a8;
+  --sh-sm:  0 2px 10px rgba(0,0,0,.05);
+  --sh-md:  0 8px 30px rgba(0,0,0,.09);
+  --sh-lg:  0 20px 60px rgba(0,0,0,.13);
+  --r:      18px;
+  --rsm:    12px;
+  --ease:   cubic-bezier(.22,1,.36,1);
 }
-[data-theme="dark"]{
-  --bg:#0a0a0a;--bg2:#121212;--card:#181818;
-  --border:#232323;--text:#eee;--text2:#9e9e9e;--muted:#555;
-  --sh-sm:0 2px 10px rgba(0,0,0,.4);
-  --sh-md:0 8px 28px rgba(0,0,0,.55);
-  --sh-lg:0 24px 60px rgba(0,0,0,.7);
+[data-theme="dark"] {
+  --bg:     #0a0a0a;
+  --bg2:    #111111;
+  --card:   #181818;
+  --border: #242424;
+  --text:   #f0f0f0;
+  --text2:  #9a9a9a;
+  --muted:  #565656;
+  --sh-sm:  0 2px 10px rgba(0,0,0,.3);
+  --sh-md:  0 8px 30px rgba(0,0,0,.45);
+  --sh-lg:  0 20px 60px rgba(0,0,0,.65);
 }
 
-/* ═══ RESET ═════════════════════════════════════════════ */
+/* ══ RESET ════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:var(--fb);background:var(--bg);color:var(--text);
-     line-height:1.65;overflow-x:hidden;transition:background .3s,color .3s}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.65;overflow-x:hidden;
+  transition:background .35s,color .35s;
+}
 a{color:inherit;text-decoration:none}
-button{font-family:var(--fb)}
+img,svg{display:block}
 ::selection{background:var(--text);color:var(--bg)}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
 
-/* ═══ PROGRESS BAR ══════════════════════════════════════ */
-#prog{position:fixed;top:0;left:0;height:2px;background:var(--text);
-      width:0;z-index:9999;transition:width .07s linear}
+/* ══ LANG TRANSITION ══════════════════════════════════════════ */
+.lang-fade{transition:opacity .22s ease}
+.lang-fade.fading{opacity:0}
 
-/* ═══ NAVBAR ════════════════════════════════════════════ */
+/* ══ PROGRESS LINE ════════════════════════════════════════════ */
+#prog{
+  position:fixed;top:0;left:0;height:2px;
+  background:var(--text);width:0;z-index:9999;
+  transition:width .07s linear;
+}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
 nav{
-  position:fixed;inset:0 0 auto 0;z-index:1000;height:62px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(1.25rem,5vw,3.5rem);
+  position:fixed;inset:0 0 auto 0;z-index:1000;
+  height:62px;display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 clamp(1.25rem,5vw,3rem);
   border-bottom:1px solid transparent;
-  transition:background .35s,border-color .35s,backdrop-filter .35s;
+  transition:background .3s,border-color .3s,backdrop-filter .3s;
 }
 nav.up{
-  background:color-mix(in srgb,var(--bg) 82%,transparent);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
   border-color:var(--border);
 }
-.logo-wrap{display:flex;align-items:center;gap:.55rem;cursor:pointer}
-/* ── Nav logo image ── */
-.logo-img{height:28px;max-width:120px;width:auto;object-fit:contain;display:none}
-.logo-txt{font-family:var(--fd);font-weight:800;font-size:1.2rem;letter-spacing:-.04em}
-.logo-txt em{font-style:normal;opacity:.3}
-
-/* ── LOGO: белый фон — multiply на светлой, invert на тёмной ── */
-/* Светлая тема: белый фон растворяется, остаётся только чёрная графика */
-body.logo-white  .logo-img { mix-blend-mode:multiply; }
-body.logo-dark   .logo-img { mix-blend-mode:screen; }
-/* Тёмная тема: инвертируем → чёрное становится белым */
-[data-theme="dark"] body.logo-white .logo-img { mix-blend-mode:normal; filter:invert(1); }
-[data-theme="dark"] body.logo-dark  .logo-img { mix-blend-mode:multiply; filter:none; }
-
-/* ── Hero logo ── */
-.hero-logo-wrap{
-  display:none;
-  margin-bottom:2rem;
-  animation:fup .65s ease .02s both;
+.logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.15rem;letter-spacing:-.04em;
+  display:flex;align-items:center;gap:.05em;
 }
-.hero-logo-img{
-  height:80px; max-width:340px; width:auto;
-  object-fit:contain; display:block;
-  transition:transform .45s cubic-bezier(.34,1.56,.64,1), filter .35s;
+.logo-on{color:var(--text)}
+.logo-it{
+  color:var(--text);opacity:.35;
+  transition:opacity .2s;
 }
-.hero-logo-img:hover{ transform:scale(1.04) translateY(-3px); }
-/* Divider under hero logo */
-.hero-logo-wrap::after{
-  content:'';
-  display:block;
-  width:40px; height:1px;
-  background:var(--border);
-  margin:1.4rem auto 0;
+.logo:hover .logo-it{opacity:.6}
+.nav-c{display:flex;align-items:center;gap:.6rem}
+.nav-links{display:flex;gap:1.75rem;list-style:none;margin-right:.5rem}
+.nav-links a{
+  font-size:.83rem;color:var(--text2);
+  transition:color .2s;position:relative;
 }
-/* Светлая тема */
-body.logo-white .hero-logo-img { mix-blend-mode:multiply; }
-body.logo-dark  .hero-logo-img { mix-blend-mode:screen; }
-/* Тёмная тема */
-[data-theme="dark"] body.logo-white .hero-logo-img { mix-blend-mode:normal; filter:invert(1) drop-shadow(0 0 18px rgba(255,255,255,.08)); }
-[data-theme="dark"] body.logo-dark  .hero-logo-img { mix-blend-mode:multiply; filter:none; }
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;
+  height:1px;background:var(--text);
+  transform:scaleX(0);transition:transform .25s var(--ease);
+  transform-origin:left;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{transform:scaleX(1)}
 
-/* ── Footer logo ── */
-.logo-img-ft{height:22px;max-width:100px;width:auto;object-fit:contain;display:none;opacity:.65}
-body.logo-white .logo-img-ft { mix-blend-mode:multiply; }
-body.logo-dark  .logo-img-ft { mix-blend-mode:screen; }
-[data-theme="dark"] body.logo-white .logo-img-ft { mix-blend-mode:normal; filter:invert(1); opacity:.6; }
-[data-theme="dark"] body.logo-dark  .logo-img-ft { mix-blend-mode:multiply; }
-.nl{display:flex;gap:1.8rem;list-style:none;margin-right:.5rem}
-.nl a{font-size:.84rem;color:var(--text2);transition:color .2s}
-.nl a:hover{color:var(--text)}
-.nav-r{display:flex;align-items:center;gap:.6rem}
-.lang-sw{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:99px;overflow:hidden}
+/* Language switcher */
+.lang-switch{
+  display:flex;align-items:center;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:99px;padding:3px;gap:2px;
+}
 .lang-btn{
   background:none;border:none;cursor:pointer;
-  font-family:var(--fb);font-size:.72rem;font-weight:600;
+  font-family:'Syne',sans-serif;font-size:.71rem;font-weight:700;
   letter-spacing:.04em;color:var(--muted);
-  padding:.34rem .6rem;transition:background .2s,color .2s;
+  padding:.28rem .55rem;border-radius:99px;
+  transition:background .2s,color .2s;
 }
-.lang-btn.active{background:var(--text);color:var(--bg)}
+.lang-btn.active{
+  background:var(--text);color:var(--bg);
+}
+.lang-btn:not(.active):hover{color:var(--text2)}
+
+.btn-pill{
+  background:var(--text);color:var(--bg);
+  border:none;border-radius:99px;
+  padding:.5rem 1.3rem;font-size:.83rem;font-weight:500;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.btn-pill:hover{opacity:.82;transform:translateY(-1px);box-shadow:var(--sh-md)}
 .theme-btn{
   width:34px;height:34px;border-radius:50%;
   background:none;border:1.5px solid var(--border);
   cursor:pointer;color:var(--text);
   display:flex;align-items:center;justify-content:center;
-  transition:background .2s;flex-shrink:0;
+  transition:background .2s,border-color .2s;flex-shrink:0;
 }
 .theme-btn:hover{background:var(--bg2)}
-.btn-pill{
-  background:var(--text);color:var(--bg);
-  border:none;border-radius:99px;
-  padding:.5rem 1.3rem;font-size:.84rem;font-weight:500;
-  cursor:pointer;white-space:nowrap;
-  transition:opacity .2s,transform .2s,box-shadow .2s;
+.ham{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
 }
-.btn-pill:hover{opacity:.82;transform:translateY(-1px);box-shadow:var(--sh-md)}
-.ham{display:none;flex-direction:column;gap:5px;
-     background:none;border:none;cursor:pointer;padding:4px}
-.ham span{display:block;width:20px;height:1.5px;
-          background:var(--text);border-radius:99px;
-          transition:transform .3s,opacity .3s}
+.ham span{
+  display:block;width:20px;height:1.5px;
+  background:var(--text);border-radius:99px;
+  transition:transform .3s,opacity .3s,width .3s;
+}
 .ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.ham.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham.open span:nth-child(2){opacity:0;width:0}
 .ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 .mob-menu{
-  display:none;position:fixed;top:62px;inset-inline:0;
+  display:none;position:fixed;
+  top:62px;inset-inline:0;
   background:var(--bg);border-bottom:1px solid var(--border);
-  padding:1.5rem clamp(1.25rem,5vw,3.5rem);
-  flex-direction:column;gap:1.25rem;z-index:999;
+  padding:1.5rem clamp(1.25rem,5vw,3rem) 2rem;
+  flex-direction:column;gap:1.1rem;z-index:999;
 }
 .mob-menu.on{display:flex}
-.mob-menu a{font-size:1rem;color:var(--text2)}
-.mob-lang{display:flex;gap:.5rem;margin-top:.5rem}
-.mob-lang .lang-btn{border:1.5px solid var(--border);border-radius:99px;padding:.4rem .85rem}
+.mob-menu a{font-size:1.05rem;color:var(--text2);padding:.25rem 0}
+.mob-menu .lang-switch{width:fit-content;margin-top:.5rem}
 
-/* ═══ HERO ══════════════════════════════════════════════ */
+/* ══ HERO ═════════════════════════════════════════════════════ */
 #hero{
   min-height:100svh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;
   padding:130px clamp(1.25rem,6vw,4rem) 90px;
   position:relative;overflow:hidden;
 }
+/* Subtle animated grid */
 .hero-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(var(--border) 1px,transparent 1px),
     linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:68px 68px;
-  mask-image:radial-gradient(ellipse 80% 72% at 50% 38%,black 22%,transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse 80% 72% at 50% 38%,black 22%,transparent 100%);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 78% 72% at 50% 40%,black 25%,transparent 100%);
+  animation:gridPulse 8s ease-in-out infinite;
 }
-.hero-ring{
-  position:absolute;width:520px;height:520px;border-radius:50%;
-  border:1px solid color-mix(in srgb,var(--border) 55%,transparent);
-  top:50%;left:50%;transform:translate(-50%,-52%);pointer-events:none;
-  animation:rspin 42s linear infinite;
+@keyframes gridPulse{0%,100%{opacity:.5}50%{opacity:.8}}
+/* Glow orbs */
+.hero-orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+  filter:blur(80px);
 }
-.hero-ring::after{
-  content:'';position:absolute;top:-4px;left:50%;
-  width:8px;height:8px;border-radius:50%;
-  background:var(--text);transform:translateX(-50%);opacity:.4;
+.hero-orb-1{
+  width:400px;height:400px;
+  background:color-mix(in srgb,var(--text) 4%,transparent);
+  top:-100px;left:-100px;
+  animation:orbFloat1 12s ease-in-out infinite;
 }
-@keyframes rspin{from{transform:translate(-50%,-52%) rotate(0)}to{transform:translate(-50%,-52%) rotate(360deg)}}
+.hero-orb-2{
+  width:300px;height:300px;
+  background:color-mix(in srgb,var(--text) 3%,transparent);
+  bottom:-50px;right:-80px;
+  animation:orbFloat2 15s ease-in-out infinite;
+}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,20px)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,-30px)}}
+
 .hero-pill{
   position:relative;display:inline-flex;align-items:center;gap:.5rem;
   border:1px solid var(--border);border-radius:99px;
-  padding:.36rem 1rem;font-size:.78rem;color:var(--text2);
-  margin-bottom:1.75rem;animation:fup .6s ease .05s both;
+  padding:.38rem 1.05rem;font-size:.77rem;color:var(--text2);
+  margin-bottom:1.75rem;
+  animation:fup .6s var(--ease) .1s both;
+  backdrop-filter:blur(8px);
+  background:color-mix(in srgb,var(--card) 70%,transparent);
 }
-.dot-live{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 2.2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.dot-live{
+  width:7px;height:7px;border-radius:50%;background:#22c55e;
+  animation:blink 2.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.3;box-shadow:0 0 0 4px rgba(34,197,94,0)}}
+
 h1.htitle{
-  font-family:var(--fd);
-  font-size:clamp(2.5rem,6.5vw,5.3rem);
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.6rem,6.8vw,5.4rem);
   font-weight:800;letter-spacing:-.038em;line-height:1.05;
-  margin-bottom:1.4rem;max-width:880px;
-  animation:fup .7s ease .2s both;
+  margin-bottom:1.4rem;max-width:880px;position:relative;
+  animation:fup .7s var(--ease) .2s both;
 }
-h1.htitle u{text-decoration:none;position:relative;display:inline-block}
-h1.htitle u::after{content:'';position:absolute;bottom:3px;left:0;right:0;
-                   height:3px;background:var(--text);border-radius:2px}
+h1.htitle u{
+  text-decoration:none;position:relative;display:inline-block;
+}
+h1.htitle u::after{
+  content:'';position:absolute;bottom:5px;left:0;right:0;
+  height:3px;background:var(--text);border-radius:2px;
+  transform:scaleX(0);transform-origin:left;
+  animation:lineReveal .6s var(--ease) .9s forwards;
+}
+@keyframes lineReveal{to{transform:scaleX(1)}}
+
 .hsub{
-  font-size:clamp(.95rem,2vw,1.1rem);color:var(--text2);
-  max-width:520px;margin-bottom:2.25rem;
-  animation:fup .7s ease .33s both;
+  font-size:clamp(.95rem,2.1vw,1.1rem);color:var(--text2);
+  max-width:520px;margin-bottom:2.4rem;position:relative;
+  animation:fup .7s var(--ease) .35s both;
+  line-height:1.7;
 }
 .hero-btns{
-  display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;
-  animation:fup .7s ease .48s both;
+  display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;
+  position:relative;animation:fup .7s var(--ease) .5s both;
 }
 .btn-outline{
   background:transparent;color:var(--text);
   border:1.5px solid var(--border);border-radius:99px;
-  padding:.7rem 1.75rem;font-size:.9rem;font-weight:500;
-  cursor:pointer;transition:background .2s,transform .2s;
+  padding:.68rem 1.75rem;font-size:.9rem;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:background .2s,transform .2s,border-color .2s;
 }
-.btn-outline:hover{background:var(--bg2);transform:translateY(-2px)}
+.btn-outline:hover{background:var(--bg2);transform:translateY(-2px);border-color:var(--text)}
 .hero-row{
   display:flex;align-items:center;gap:2.5rem;
-  margin-top:3.75rem;flex-wrap:wrap;justify-content:center;
-  animation:fup .7s ease .62s both;
+  margin-top:4rem;flex-wrap:wrap;justify-content:center;
+  position:relative;animation:fup .7s var(--ease) .65s both;
 }
 .hstat{text-align:center}
-.hstat-n{font-family:var(--fd);font-size:1.8rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.hstat-l{font-size:.74rem;color:var(--muted);margin-top:.2rem}
-.hdiv{width:1px;height:40px;background:var(--border)}
-@keyframes fup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hstat-n{
+  font-family:'Syne',sans-serif;
+  font-size:1.8rem;font-weight:800;letter-spacing:-.03em;
+}
+.hstat-l{font-size:.73rem;color:var(--muted);margin-top:.25rem}
+.hdiv{width:1px;height:36px;background:var(--border)}
+@keyframes fup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-/* ═══ SECTIONS ══════════════════════════════════════════ */
-.sec{padding:clamp(60px,9vw,100px) clamp(1.25rem,5vw,3.5rem)}
+/* ══ SECTIONS ═════════════════════════════════════════════════ */
+.sec{padding:clamp(60px,9vw,100px) clamp(1.25rem,5vw,3rem)}
 .sec-alt{background:var(--bg2)}
-.lbl{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.6rem}
-.stitle{font-family:var(--fd);font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:700;letter-spacing:-.025em;line-height:1.15}
+.label{
+  font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--muted);margin-bottom:.65rem;
+}
+.stitle{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.75rem,3.6vw,2.8rem);
+  font-weight:700;letter-spacing:-.026em;line-height:1.14;
+}
 .sdesc{color:var(--text2);font-size:.94rem;max-width:380px;line-height:1.7}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:clamp(2rem,4vw,3.5rem);flex-wrap:wrap}
+.sec-head{
+  display:flex;align-items:flex-end;
+  justify-content:space-between;gap:2rem;
+  margin-bottom:clamp(2rem,4vw,3.5rem);flex-wrap:wrap;
+}
 
-/* ═══ SERVICE CARDS ═════════════════════════════════════ */
-.srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1.1rem}
+/* ══ SERVICE CARDS ════════════════════════════════════════════ */
+.srv-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:1rem;
+}
 .srv-card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r);padding:1.8rem;
-  transition:box-shadow .3s,transform .3s,border-color .3s;
+  border-radius:var(--r);padding:1.75rem;
+  transition:box-shadow .35s var(--ease),transform .35s var(--ease),border-color .25s;
   cursor:default;position:relative;overflow:hidden;
 }
-.srv-card::after{
-  content:attr(data-num);
-  position:absolute;top:1.4rem;right:1.4rem;
-  font-family:var(--fd);font-size:2rem;font-weight:800;
-  color:var(--text);opacity:.04;letter-spacing:-.04em;
-  transition:opacity .3s;pointer-events:none;
+.srv-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--text) 3%,transparent),transparent 60%);
+  opacity:0;transition:opacity .35s;
 }
-.srv-card:hover::after{opacity:.08}
-.srv-card:hover{box-shadow:var(--sh-lg);transform:translateY(-5px);border-color:var(--text)}
-.sico{width:46px;height:46px;background:var(--bg2);border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      margin-bottom:1.1rem;transition:background .25s,transform .3s}
-.srv-card:hover .sico{background:var(--text);transform:scale(1.07)}
-.sico svg{width:20px;height:20px;stroke:var(--text);fill:none;stroke-width:1.8;transition:stroke .25s}
+.srv-card:hover{
+  box-shadow:var(--sh-lg);
+  transform:translateY(-5px);
+  border-color:color-mix(in srgb,var(--text) 40%,transparent);
+}
+.srv-card:hover::before{opacity:1}
+.sico{
+  width:46px;height:46px;background:var(--bg2);border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.1rem;
+  transition:background .3s var(--ease),transform .35s var(--ease);
+  position:relative;
+}
+.srv-card:hover .sico{background:var(--text);transform:scale(1.08) rotate(-3deg)}
+.sico svg{width:20px;height:20px;stroke:var(--text);fill:none;stroke-width:1.8;transition:stroke .3s}
 .srv-card:hover .sico svg{stroke:var(--bg)}
-.srv-card h3{font-family:var(--fd);font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.srv-card h3{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  margin-bottom:.5rem;letter-spacing:-.01em;
+}
 .srv-card .sd{font-size:.84rem;color:var(--text2);line-height:1.6}
 .tags{display:flex;flex-wrap:wrap;gap:.32rem;margin-top:.9rem}
-.tag{font-size:.72rem;padding:.27rem .62rem;background:var(--bg2);border-radius:99px;color:var(--text2);transition:background .2s}
-.srv-card:hover .tag{background:color-mix(in srgb,var(--text) 8%,var(--bg))}
-.snote{font-size:.74rem;color:var(--muted);margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--border);line-height:1.5}
+.tag{
+  font-size:.71rem;padding:.26rem .62rem;
+  background:var(--bg2);border-radius:99px;color:var(--text2);
+  border:1px solid transparent;
+  transition:background .2s,border-color .2s;
+}
+.srv-card:hover .tag{
+  background:color-mix(in srgb,var(--text) 6%,var(--bg));
+  border-color:var(--border);
+}
+.snote{
+  font-size:.74rem;color:var(--muted);
+  margin-top:.85rem;padding-top:.85rem;
+  border-top:1px solid var(--border);line-height:1.5;
+}
 
-/* ═══ MARQUEE ═══════════════════════════════════════════ */
-#strip{background:var(--text);color:var(--bg);padding:clamp(34px,5vw,60px) 0;overflow:hidden}
-.mq-track{display:flex;gap:3rem;animation:mq 32s linear infinite;width:max-content}
-.mq-track:hover{animation-play-state:paused}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.si{display:flex;align-items:center;gap:.6rem;font-family:var(--fd);font-size:clamp(.86rem,1.8vw,1.08rem);font-weight:600;opacity:.88;white-space:nowrap}
+/* ══ MARQUEE ══════════════════════════════════════════════════ */
+#strip{
+  background:var(--text);color:var(--bg);
+  padding:clamp(32px,4.5vw,58px) 0;overflow:hidden;
+}
+.marquee-outer{overflow:hidden}
+.marquee-track{
+  display:flex;gap:2.5rem;
+  animation:marquee 30s linear infinite;
+  width:max-content;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.si{
+  display:flex;align-items:center;gap:.65rem;
+  font-family:'Syne',sans-serif;
+  font-size:clamp(.85rem,1.7vw,1.05rem);
+  font-weight:600;opacity:.8;white-space:nowrap;
+}
 .si svg{width:16px;height:16px;stroke:var(--bg);fill:none;stroke-width:2.2;flex-shrink:0}
 .ss{width:4px;height:4px;border-radius:50%;background:var(--bg);opacity:.3;flex-shrink:0}
 
-/* ═══ APPLE SCROLL ══════════════════════════════════════ */
+/* ══ APPLE SCROLL ═════════════════════════════════════════════ */
 #apple-wrap{height:480vh;position:relative}
 #apple-sticky{
   position:sticky;top:0;height:100vh;
@@ -283,378 +396,519 @@ h1.htitle u::after{content:'';position:absolute;bottom:3px;left:0;right:0;
 }
 .apple-bg{
   position:absolute;inset:0;pointer-events:none;
-  font-family:var(--fd);font-size:clamp(5rem,20vw,18rem);font-weight:800;
-  letter-spacing:-.05em;color:var(--text);opacity:.03;
-  user-select:none;display:flex;align-items:center;justify-content:center;white-space:nowrap;
+  font-family:'Syne',sans-serif;
+  font-size:clamp(5rem,17vw,15rem);font-weight:800;
+  letter-spacing:-.05em;color:var(--text);opacity:.025;
+  user-select:none;display:flex;align-items:center;justify-content:center;
+  white-space:nowrap;
 }
 .astep{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
-  width:100%;max-width:800px;padding:0 clamp(1.25rem,5vw,3rem);
+  width:100%;max-width:800px;
+  padding:0 clamp(1.25rem,5vw,3rem);
   display:flex;flex-direction:column;align-items:center;
-  text-align:center;opacity:0;pointer-events:none;will-change:opacity,transform;
+  text-align:center;opacity:0;pointer-events:none;
+  will-change:opacity,transform;
 }
 .astep.on{opacity:1;pointer-events:auto}
-.astep-num{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:.9rem}
-.astep h2{font-family:var(--fd);font-size:clamp(1.9rem,5vw,4rem);font-weight:800;letter-spacing:-.03em;line-height:1.07;margin-bottom:1rem}
-.astep p{font-size:clamp(.9rem,2vw,1.1rem);color:var(--text2);max-width:490px;line-height:1.66}
+.astep-num{
+  font-size:.69rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.15em;color:var(--muted);margin-bottom:.9rem;
+}
+.astep h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,5.2vw,4.2rem);
+  font-weight:800;letter-spacing:-.035em;line-height:1.06;
+  margin-bottom:1rem;
+}
+.astep p{
+  font-size:clamp(.9rem,2vw,1.1rem);color:var(--text2);
+  max-width:480px;line-height:1.7;
+}
 .astep-ico{
-  width:80px;height:80px;background:var(--bg2);
-  border:1px solid var(--border);border-radius:24px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.75rem;font-size:2rem;box-shadow:var(--sh-md);
+  width:78px;height:78px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:24px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.75rem;font-size:2rem;
+  box-shadow:var(--sh-md);
   transition:transform .6s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;
 }
-.astep.on .astep-ico{transform:scale(1.1) translateY(-3px);box-shadow:var(--sh-lg)}
-#a-dots{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;z-index:10}
-.adot{width:6px;height:6px;border-radius:99px;background:var(--border);transition:width .35s,background .35s}
+.astep.on .astep-ico{
+  transform:scale(1.1) translateY(-4px);
+  box-shadow:var(--sh-lg);
+}
+#apple-dots{
+  position:absolute;bottom:2.5rem;left:50%;
+  transform:translateX(-50%);display:flex;gap:.55rem;z-index:10;
+}
+.adot{
+  width:6px;height:6px;border-radius:99px;
+  background:var(--border);
+  transition:width .35s var(--ease),background .35s;
+}
 .adot.on{width:22px;background:var(--text)}
-#a-line{position:absolute;bottom:0;left:0;height:2px;background:var(--text);width:0;opacity:.2}
+#apple-line{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:var(--text);width:0;opacity:.2;
+}
 
-/* ═══ DEVICE SECTION ════════════════════════════════════ */
-#device-sec{display:flex;align-items:center;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap}
-.dev-l{flex:1;min-width:270px}
+/* ══ DEVICE ═══════════════════════════════════════════════════ */
+#device-sec{display:flex;align-items:center;gap:clamp(2.5rem,7vw,6rem);flex-wrap:wrap}
+.dev-l{flex:1;min-width:280px}
 .dev-l .stitle{margin-bottom:1.1rem}
 .dev-l .sdesc{margin-bottom:1.5rem}
-.dev-list{list-style:none;display:flex;flex-direction:column;gap:.75rem}
-.dev-list li{display:flex;align-items:flex-start;gap:.75rem;font-size:.9rem;color:var(--text2)}
-.dev-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--text);flex-shrink:0;margin-top:.58rem}
-.dev-r{flex:1;min-width:270px;display:flex;justify-content:center}
-.lm{width:100%;max-width:440px;transition:transform .12s linear}
-.lm-body{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:14px;box-shadow:var(--sh-lg)}
-.lm-scr{background:var(--bg2);border-radius:12px;aspect-ratio:16/10;overflow:hidden;padding:16px;display:flex;flex-direction:column;gap:10px}
+.dev-list{list-style:none;display:flex;flex-direction:column;gap:.8rem}
+.dev-list li{
+  display:flex;align-items:flex-start;gap:.75rem;
+  font-size:.9rem;color:var(--text2);line-height:1.55;
+}
+.dev-list li::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--text);flex-shrink:0;margin-top:.55rem;
+}
+.dev-r{flex:1;min-width:260px;display:flex;justify-content:center}
+.lm{width:100%;max-width:420px;transition:transform .12s linear}
+.lm-body{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:16px;padding:13px;box-shadow:var(--sh-lg);
+}
+.lm-scr{
+  background:var(--bg2);border-radius:9px;
+  aspect-ratio:16/10;overflow:hidden;padding:15px;
+  display:flex;flex-direction:column;gap:9px;
+}
 .lm-b{height:7px;border-radius:4px;background:var(--border)}
-.lm-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.lm-mc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:5px}
+.lm-mini{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:3px}
+.lm-mc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:7px;padding:9px;display:flex;flex-direction:column;gap:5px;
+}
 .lm-mb{height:5px;border-radius:3px;background:var(--border)}
-.lm-base{background:var(--card);border:2px solid var(--border);height:12px;border-top:none;border-radius:0 0 10px 10px;margin-top:-2px;position:relative}
-.lm-base::after{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);width:50px;height:3px;border-radius:2px;background:var(--border)}
+.lm-base{
+  background:var(--card);border:2px solid var(--border);
+  height:10px;border-top:none;
+  border-radius:0 0 7px 7px;margin-top:-2px;position:relative;
+}
+.lm-base::after{
+  content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:44px;height:3px;border-radius:2px;background:var(--border);
+}
 
-/* ═══ PRICING ═══════════════════════════════════════════ */
-.price-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.75rem 3rem}
-.pcat-title{font-family:var(--fd);font-size:.73rem;font-weight:700;
+/* ══ PRICING ══════════════════════════════════════════════════ */
+.price-cats{display:flex;flex-direction:column;gap:2rem}
+.pcat-title{
+  font-family:'Syne',sans-serif;font-size:.73rem;font-weight:700;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:.85rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+  margin-bottom:.8rem;padding-bottom:.55rem;
+  border-bottom:1px solid var(--border);
+}
 .price-list{display:flex;flex-direction:column}
 .pr{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;
+  justify-content:space-between;
   padding:.78rem 0;border-bottom:1px solid var(--border);gap:1rem;
-  transition:padding .18s,background .18s,border-radius .18s,margin .18s;cursor:default;
+  transition:padding .2s var(--ease),background .2s,border-radius .2s;
 }
 .pr:last-child{border-bottom:none}
-.pr:hover{padding-left:.8rem;padding-right:.8rem;margin:0 -.8rem;border-radius:var(--rsm);background:var(--card)}
+.pr:hover{
+  padding-left:.75rem;padding-right:.75rem;
+  margin:0 -.75rem;border-radius:10px;background:var(--card);
+}
 .pr-n{font-size:.92rem;color:var(--text)}
-.pr-p{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.pr-f{font-size:.68rem;color:var(--muted);font-weight:400;margin-right:.2rem}
-.price-note{margin-top:2.25rem;padding:1.1rem 1.4rem;border:1px dashed var(--border);border-radius:var(--rsm);font-size:.84rem;color:var(--muted);text-align:center;line-height:1.65}
+.pr-p{
+  font-family:'Syne',sans-serif;font-size:.93rem;
+  font-weight:700;letter-spacing:-.01em;white-space:nowrap;
+}
+.pr-f{font-size:.66rem;color:var(--muted);font-weight:400;margin-right:.2rem}
+.price-note{
+  margin-top:2rem;padding:1rem 1.35rem;
+  border:1px dashed var(--border);border-radius:var(--rsm);
+  font-size:.84rem;color:var(--muted);text-align:center;line-height:1.65;
+}
 
-/* ═══ WHY US ════════════════════════════════════════════ */
-#why-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center}
-.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.why-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:1.4rem;
-  transition:transform .25s,box-shadow .25s,border-color .25s}
-.why-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:color-mix(in srgb,var(--text) 30%,var(--border))}
-.why-ico{font-size:1.4rem;margin-bottom:.65rem}
-.why-card h4{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:.35rem}
-.why-card p{font-size:.8rem;color:var(--muted);line-height:1.55}
+/* ══ WHY ══════════════════════════════════════════════════════ */
+#why-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2.5rem,7vw,6rem);align-items:center;
+}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.why-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rsm);padding:1.4rem;
+  transition:transform .25s var(--ease),box-shadow .25s,border-color .2s;
+}
+.why-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--sh-md);
+  border-color:color-mix(in srgb,var(--text) 25%,transparent);
+}
+.why-ico{font-size:1.35rem;margin-bottom:.65rem}
+.why-card h4{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:.35rem}
+.why-card p{font-size:.79rem;color:var(--muted);line-height:1.55}
 
-/* ═══ CONTACT ═══════════════════════════════════════════ */
-#contact{background:var(--text);color:var(--bg);padding:clamp(60px,9vw,100px) clamp(1.25rem,5vw,3.5rem)}
-#contact .lbl{color:color-mix(in srgb,var(--bg) 40%,transparent)}
+/* ══ CONTACT ══════════════════════════════════════════════════ */
+#contact{
+  background:var(--text);color:var(--bg);
+  padding:clamp(60px,9vw,100px) clamp(1.25rem,5vw,3rem);
+}
+#contact .label{color:color-mix(in srgb,var(--bg) 42%,transparent)}
 #contact .stitle{color:var(--bg);max-width:500px;margin-bottom:.65rem}
-#contact>.sdesc{color:color-mix(in srgb,var(--bg) 55%,transparent)}
-.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);margin-top:3rem}
-.cform{display:flex;flex-direction:column;gap:.9rem}
+#contact>.sdesc{color:color-mix(in srgb,var(--bg) 52%,transparent)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,7vw,6rem);margin-top:3rem}
+.cform{display:flex;flex-direction:column;gap:.85rem}
 .fg{display:flex;flex-direction:column;gap:.35rem}
-.fg label{font-size:.77rem;color:color-mix(in srgb,var(--bg) 50%,transparent)}
+.fg label{font-size:.76rem;color:color-mix(in srgb,var(--bg) 48%,transparent)}
 .fg input,.fg textarea,.fg select{
   background:color-mix(in srgb,var(--bg) 7%,transparent);
-  border:1px solid color-mix(in srgb,var(--bg) 18%,transparent);
-  border-radius:var(--rsm);padding:.82rem 1rem;
-  color:var(--bg);font-family:var(--fb);font-size:.9rem;
+  border:1px solid color-mix(in srgb,var(--bg) 17%,transparent);
+  border-radius:var(--rsm);padding:.8rem 1rem;
+  color:var(--bg);font-family:inherit;font-size:.9rem;
   outline:none;transition:border-color .2s,background .2s;width:100%;
 }
 .fg input:focus,.fg textarea:focus{
-  border-color:color-mix(in srgb,var(--bg) 44%,transparent);
+  border-color:color-mix(in srgb,var(--bg) 42%,transparent);
   background:color-mix(in srgb,var(--bg) 11%,transparent);
 }
-.fg input::placeholder,.fg textarea::placeholder{color:color-mix(in srgb,var(--bg) 28%,transparent)}
-.fg select option{background:#1c1c1c;color:#fff}
-.fg textarea{min-height:120px;resize:vertical}
+.fg input::placeholder,.fg textarea::placeholder{
+  color:color-mix(in srgb,var(--bg) 27%,transparent);
+}
+.fg select option{background:#1a1a1a;color:#fff}
+.fg textarea{min-height:115px;resize:vertical}
 .btn-send{
   background:var(--bg);color:var(--text);
   border:none;border-radius:99px;
-  padding:.82rem 2rem;font-size:.9rem;font-weight:500;
-  cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;
-  width:fit-content;margin-top:.25rem;
-  transition:opacity .2s,transform .2s;
+  padding:.78rem 2rem;font-size:.9rem;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;gap:.5rem;
+  width:fit-content;margin-top:.2rem;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
 }
-.btn-send:hover{opacity:.84;transform:translateY(-1px)}
-.fok{display:none;margin-top:.5rem;padding:.88rem 1.1rem;
-  background:color-mix(in srgb,#22c55e 12%,transparent);
-  border:1px solid color-mix(in srgb,#22c55e 25%,transparent);
-  border-radius:10px;color:#4ade80;font-size:.875rem}
+.btn-send:hover{opacity:.84;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.fok{
+  display:none;margin-top:.5rem;
+  padding:.85rem 1.1rem;
+  background:color-mix(in srgb,#22c55e 11%,transparent);
+  border:1px solid color-mix(in srgb,#22c55e 24%,transparent);
+  border-radius:10px;color:#4ade80;font-size:.875rem;
+}
 .cinfo{display:flex;flex-direction:column;gap:1.75rem}
-.cinfo h3{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--bg);margin-bottom:.85rem}
+.cinfo h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--bg);margin-bottom:.85rem}
 .slinks{display:flex;flex-direction:column;gap:.6rem}
 .slink{
-  display:flex;align-items:center;gap:.9rem;padding:.88rem 1.1rem;
+  display:flex;align-items:center;gap:.9rem;
+  padding:.88rem 1.1rem;
   background:color-mix(in srgb,var(--bg) 7%,transparent);
-  border:1px solid color-mix(in srgb,var(--bg) 14%,transparent);
+  border:1px solid color-mix(in srgb,var(--bg) 13%,transparent);
   border-radius:var(--rsm);color:var(--bg);
-  transition:background .2s,transform .2s;
+  transition:background .2s,transform .25s var(--ease),border-color .2s;
 }
-.slink:hover{background:color-mix(in srgb,var(--bg) 13%,transparent);transform:translateX(5px)}
+.slink:hover{
+  background:color-mix(in srgb,var(--bg) 13%,transparent);
+  transform:translateX(5px);
+  border-color:color-mix(in srgb,var(--bg) 28%,transparent);
+}
 .slink svg{width:18px;height:18px;stroke:var(--bg);fill:none;stroke-width:1.8;flex-shrink:0}
 .sl-n{font-size:.88rem;font-weight:500}
 .sl-s{font-size:.73rem;opacity:.45;margin-top:.04rem}
-.cnote{padding:1.1rem 1.25rem;background:color-mix(in srgb,var(--bg) 6%,transparent);
-  border-radius:var(--rsm);font-size:.82rem;color:color-mix(in srgb,var(--bg) 52%,transparent);line-height:1.65}
+.cnote{
+  padding:1.05rem 1.2rem;
+  background:color-mix(in srgb,var(--bg) 6%,transparent);
+  border-radius:var(--rsm);font-size:.82rem;
+  color:color-mix(in srgb,var(--bg) 52%,transparent);line-height:1.65;
+}
 
-/* ═══ FOOTER ════════════════════════════════════════════ */
-footer{background:var(--bg);border-top:1px solid var(--border);
-  padding:2.5rem clamp(1.25rem,5vw,3.5rem);
-  display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
-.flinks{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
-.flinks a{font-size:.82rem;color:var(--muted);transition:color .2s}
+/* ══ FOOTER ═══════════════════════════════════════════════════ */
+footer{
+  background:var(--bg);border-top:1px solid var(--border);
+  padding:2.5rem clamp(1.25rem,5vw,3rem);
+  display:flex;align-items:center;
+  justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+}
+.flinks{display:flex;gap:1.75rem;list-style:none;flex-wrap:wrap}
+.flinks a{font-size:.81rem;color:var(--muted);transition:color .2s}
 .flinks a:hover{color:var(--text)}
 .fcopy{font-size:.77rem;color:var(--muted)}
 
-/* ═══ REVEAL ANIMATIONS ═════════════════════════════════ */
-.rv  {opacity:0;transform:translateY(24px);  transition:opacity .7s ease,transform .7s ease}
-.rvl {opacity:0;transform:translateX(-28px); transition:opacity .7s ease,transform .7s ease}
-.rvr {opacity:0;transform:translateX(28px);  transition:opacity .7s ease,transform .7s ease}
+/* ══ REVEAL ═══════════════════════════════════════════════════ */
+.rv  {opacity:0;transform:translateY(22px);  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rvl {opacity:0;transform:translateX(-26px); transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rvr {opacity:0;transform:translateX(26px);  transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .rv.on,.rvl.on,.rvr.on{opacity:1;transform:none}
-.stg>*{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.stg>*{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .stg.on>*{opacity:1;transform:none}
-.stg.on>*:nth-child(1){transition-delay:.00s}
-.stg.on>*:nth-child(2){transition-delay:.07s}
-.stg.on>*:nth-child(3){transition-delay:.13s}
-.stg.on>*:nth-child(4){transition-delay:.19s}
-.stg.on>*:nth-child(5){transition-delay:.25s}
-.stg.on>*:nth-child(6){transition-delay:.31s}
-.stg.on>*:nth-child(n+7){transition-delay:.37s}
+.stg.on>*:nth-child(1){transition-delay:0s}
+.stg.on>*:nth-child(2){transition-delay:.06s}
+.stg.on>*:nth-child(3){transition-delay:.12s}
+.stg.on>*:nth-child(4){transition-delay:.18s}
+.stg.on>*:nth-child(5){transition-delay:.24s}
+.stg.on>*:nth-child(6){transition-delay:.3s}
+.stg.on>*:nth-child(n+7){transition-delay:.36s}
 
-/* ═══ RESPONSIVE ════════════════════════════════════════ */
-@media(max-width:960px){
-  .nl{display:none}
+/* ══ RESPONSIVE ═══════════════════════════════════════════════ */
+@media(max-width:920px){
+  .nav-links,.lang-switch.desk{display:none}
   .ham{display:flex}
   #why-wrap{grid-template-columns:1fr}
   .cgrid{grid-template-columns:1fr}
   #device-sec{flex-direction:column}
 }
-@media(max-width:680px){
+@media(max-width:640px){
   .srv-grid{grid-template-columns:1fr}
   .why-grid{grid-template-columns:1fr 1fr}
   h1.htitle{font-size:2.15rem}
   .astep h2{font-size:1.9rem}
-  .hero-ring{width:300px;height:300px}
-  .price-cats{grid-template-columns:1fr}
 }
-@media(max-width:440px){
+@media(max-width:420px){
   .why-grid{grid-template-columns:1fr}
-  .hero-row{gap:1.4rem}
+  .hero-row{gap:1.5rem}
   .hdiv{display:none}
-  .nav-r .btn-pill{display:none}
-  .lang-btn{padding:.34rem .5rem;font-size:.68rem}
+  .astep h2{font-size:1.7rem}
 }
-</style>
+  </style>
 </head>
 <body>
 
 <div id="prog"></div>
 
-<!-- ═══ NAVBAR ══════════════════════════════════════════ -->
+<!-- ═══ NAV ═══════════════════════════════════════════════════ -->
 <nav id="nav">
-  <a href="#hero" class="logo-wrap" id="logo-link">
-    <img id="logo-img" alt="OniT" style="display:none"/>
-    <span class="logo-txt" id="logo-txt">Oni<em>T</em></span>
+  <a href="#hero" class="logo">
+    <span class="logo-on">Oni</span><span class="logo-it">T</span>
   </a>
-  <ul class="nl">
-    <li><a href="#services" data-t="nav_srv">Услуги</a></li>
-    <li><a href="#pricing"  data-t="nav_price">Цены</a></li>
-    <li><a href="#why"      data-t="nav_about">О нас</a></li>
-    <li><a href="#contact"  data-t="nav_contact">Контакт</a></li>
+  <ul class="nav-links">
+    <li><a href="#services" data-i18n="nav_services">Услуги</a></li>
+    <li><a href="#pricing"  data-i18n="nav_pricing">Цены</a></li>
+    <li><a href="#why"      data-i18n="nav_about">О нас</a></li>
+    <li><a href="#contact"  data-i18n="nav_contact">Контакт</a></li>
   </ul>
-  <div class="nav-r">
-    <div class="lang-sw">
+  <div class="nav-c">
+    <!-- Desktop lang switcher -->
+    <div class="lang-switch desk" id="langSwitchDesk">
       <button class="lang-btn active" data-lang="ru">RU</button>
       <button class="lang-btn" data-lang="en">EN</button>
       <button class="lang-btn" data-lang="es">ES</button>
     </div>
     <button class="theme-btn" id="tbtn" aria-label="Theme">
-      <svg id="ico-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg id="ico-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="ico-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="ico-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
-    <a href="#contact" class="btn-pill" data-t="nav_write">Написать</a>
-    <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="#contact" class="btn-pill" data-i18n="nav_write">Написать</a>
+    <button class="ham" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
 <div class="mob-menu" id="mob">
-  <a href="#services" data-t="nav_srv"     onclick="closeMob()">Услуги</a>
-  <a href="#pricing"  data-t="nav_price"   onclick="closeMob()">Цены</a>
-  <a href="#why"      data-t="nav_about"   onclick="closeMob()">О нас</a>
-  <a href="#contact"  data-t="nav_contact" onclick="closeMob()">Контакт</a>
-  <div class="mob-lang">
+  <a href="#services" onclick="closeMob()" data-i18n="nav_services">Услуги</a>
+  <a href="#pricing"  onclick="closeMob()" data-i18n="nav_pricing">Цены</a>
+  <a href="#why"      onclick="closeMob()" data-i18n="nav_about">О нас</a>
+  <a href="#contact"  onclick="closeMob()" data-i18n="nav_contact">Контакт</a>
+  <div class="lang-switch" id="langSwitchMob">
     <button class="lang-btn active" data-lang="ru">RU</button>
     <button class="lang-btn" data-lang="en">EN</button>
     <button class="lang-btn" data-lang="es">ES</button>
   </div>
 </div>
 
-<!-- ═══ HERO ═════════════════════════════════════════════ -->
+<!-- ═══ HERO ════════════════════════════════════════════════ -->
 <section id="hero">
   <div class="hero-grid"></div>
-  <div class="hero-ring"></div>
-
-  <!-- Hero logo — появляется автоматически когда задан LOGO_SRC -->
-  <div class="hero-logo-wrap" id="hero-logo-wrap">
-    <img id="hero-logo-img" class="hero-logo-img" alt="OniT"/>
-  </div>
-
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
   <div class="hero-pill">
     <span class="dot-live"></span>
-    <span data-t="hero_pill">Принимаю заявки · Быстрый ответ</span>
+    <span data-i18n="hero_badge">Принимаю заявки · Быстрый ответ</span>
   </div>
-  <h1 class="htitle" data-t="hero_title">Технические услуги<br>и <u>цифровые решения</u></h1>
-  <p class="hsub" data-t="hero_sub">ПК, ноутбуки, смартфоны, настройка и дизайн.<br>Быстро, аккуратно, по честной цене.</p>
+  <h1 class="htitle">
+    <span data-i18n="hero_title_1">Технические услуги</span><br>
+    <span data-i18n="hero_title_2">и </span><u data-i18n="hero_title_u">цифровые решения</u>
+  </h1>
+  <p class="hsub" data-i18n="hero_sub">ПК, ноутбуки, смартфоны, настройка и дизайн.<br>Быстро, аккуратно, по честной цене.</p>
   <div class="hero-btns">
-    <a href="#contact" class="btn-pill" style="padding:.78rem 2rem;font-size:.95rem" data-t="hero_btn1">Написать нам</a>
-    <a href="#services" class="btn-outline" data-t="hero_btn2">Посмотреть услуги</a>
+    <a href="#contact" class="btn-pill" style="padding:.75rem 2rem;font-size:.93rem" data-i18n="hero_cta1">Написать нам</a>
+    <a href="#services" class="btn-outline" data-i18n="hero_cta2">Посмотреть услуги</a>
   </div>
   <div class="hero-row">
     <div class="hstat">
-      <div class="hstat-n" data-counter="50" data-suffix="+">50+</div>
-      <div class="hstat-l" data-t="hero_s1l">Выполненных задач</div>
+      <div class="hstat-n">50+</div>
+      <div class="hstat-l" data-i18n="stat1">Выполненных задач</div>
     </div>
     <div class="hdiv"></div>
     <div class="hstat">
-      <div class="hstat-n" data-t="hero_s2n">1 год</div>
-      <div class="hstat-l" data-t="hero_s2l">Опыт работы</div>
+      <div class="hstat-n">1 <span data-i18n="stat2_unit">г.</span></div>
+      <div class="hstat-l" data-i18n="stat2">Опыт работы</div>
     </div>
     <div class="hdiv"></div>
     <div class="hstat">
-      <div class="hstat-n">24<span data-t="hero_s3n_unit">ч</span></div>
-      <div class="hstat-l" data-t="hero_s3l">Время ответа</div>
+      <div class="hstat-n">24 <span data-i18n="stat3_unit">ч</span></div>
+      <div class="hstat-l" data-i18n="stat3">Время ответа</div>
     </div>
     <div class="hdiv"></div>
     <div class="hstat">
       <div class="hstat-n">100%</div>
-      <div class="hstat-l" data-t="hero_s4l">Честная цена</div>
+      <div class="hstat-l" data-i18n="stat4">Честная цена</div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SERVICES ═════════════════════════════════════════ -->
+<!-- ═══ SERVICES ══════════════════════════════════════════════ -->
 <section id="services" class="sec sec-alt">
   <div class="sec-head rv">
     <div>
-      <p class="lbl" data-t="srv_lbl">Что я делаю</p>
-      <h2 class="stitle" data-t="srv_title">Услуги для людей<br>и бизнеса</h2>
+      <p class="label" data-i18n="srv_label">Что я делаю</p>
+      <h2 class="stitle" data-i18n="srv_title">Услуги для людей<br>и бизнеса</h2>
     </div>
-    <p class="sdesc" data-t="srv_desc">Широкий спектр технических и цифровых услуг. Каждая задача — индивидуально.</p>
+    <p class="sdesc" data-i18n="srv_desc">Широкий спектр технических и цифровых услуг. Каждая задача — индивидуально.</p>
   </div>
   <div class="srv-grid stg">
-    <div class="srv-card" data-num="01">
+
+    <!-- PC -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-      <h3 data-t="s1_title">Компьютеры и ноутбуки</h3>
-      <p class="sd" data-t="s1_desc">Диагностика, чистка, оптимизация и восстановление системы.</p>
-      <div class="tags" data-ttags="s1_tags"></div>
+      <h3 data-i18n="s1_title">Компьютеры и ноутбуки</h3>
+      <p class="sd" data-i18n="s1_desc">Диагностика, чистка, оптимизация и восстановление системы.</p>
+      <div class="tags" data-i18n-tags="s1_tags">
+        <span class="tag">Ускорение ПК</span><span class="tag">Чистка системы</span>
+        <span class="tag">Переустановка Windows</span><span class="tag">Драйверы</span>
+        <span class="tag">Удаление вирусов</span><span class="tag">Автозагрузка</span>
+        <span class="tag">Игровой / рабочий setup</span><span class="tag">Бэкап данных</span>
+      </div>
     </div>
-    <div class="srv-card" data-num="02">
+
+    <!-- Upgrade -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <h3 data-t="s2_title">Апгрейд и сборка ПК</h3>
-      <p class="sd" data-t="s2_desc">Замена комплектующих, сборка с нуля, консультация по выбору.</p>
-      <div class="tags" data-ttags="s2_tags"></div>
-      <p class="snote" data-t="s2_note">⚠️ Стоимость комплектующих оплачивается отдельно.</p>
+      <h3 data-i18n="s2_title">Апгрейд и сборка ПК</h3>
+      <p class="sd" data-i18n="s2_desc">Замена комплектующих, сборка с нуля и консультация по выбору.</p>
+      <div class="tags" data-i18n-tags="s2_tags">
+        <span class="tag">Установка SSD</span><span class="tag">Апгрейд RAM</span>
+        <span class="tag">Чистка от пыли</span><span class="tag">Термопаста</span>
+        <span class="tag">Сборка ПК</span><span class="tag">Подбор комплектующих</span>
+        <span class="tag">Проверка совместимости</span><span class="tag">Бюджетная сборка</span>
+      </div>
+      <p class="snote" data-i18n="s2_note">⚠️ Стоимость комплектующих оплачивается отдельно. Услуга включает установку и настройку.</p>
     </div>
-    <div class="srv-card" data-num="03">
+
+    <!-- Phone -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-      <h3 data-t="s3_title">Телефоны и планшеты</h3>
-      <p class="sd" data-t="s3_desc">Настройка, оптимизация и базовое техническое обслуживание.</p>
-      <div class="tags" data-ttags="s3_tags"></div>
+      <h3 data-i18n="s3_title">Телефоны и планшеты</h3>
+      <p class="sd" data-i18n="s3_desc">Настройка, оптимизация и базовое техническое обслуживание.</p>
+      <div class="tags" data-i18n-tags="s3_tags">
+        <span class="tag">Перенос данных</span><span class="tag">Настройка аккаунтов</span>
+        <span class="tag">Чистка памяти</span><span class="tag">Резервные копии</span>
+        <span class="tag">Установка приложений</span><span class="tag">Оптимизация</span>
+        <span class="tag">Замена аккумулятора</span><span class="tag">Защитное стекло</span>
+        <span class="tag">Олеофобное покрытие</span>
+      </div>
     </div>
-    <div class="srv-card" data-num="04">
+
+    <!-- Email -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-      <h3 data-t="s4_title">Аккаунты и почта</h3>
-      <p class="sd" data-t="s4_desc">Помощь с настройкой и восстановлением учётных записей.</p>
-      <div class="tags" data-ttags="s4_tags"></div>
+      <h3 data-i18n="s4_title">Аккаунты и почта</h3>
+      <p class="sd" data-i18n="s4_desc">Помощь с настройкой и восстановлением учётных записей.</p>
+      <div class="tags" data-i18n-tags="s4_tags">
+        <span class="tag">Настройка почты</span><span class="tag">Синхронизация</span>
+        <span class="tag">Восстановление пароля</span><span class="tag">Очистка спама</span>
+        <span class="tag">Связка аккаунтов</span>
+      </div>
     </div>
-    <div class="srv-card" data-num="05">
+
+    <!-- Home -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-      <h3 data-t="s5_title">Домашняя техника</h3>
-      <p class="sd" data-t="s5_desc">Подключение, настройка и управление домашним оборудованием.</p>
-      <div class="tags" data-ttags="s5_tags"></div>
+      <h3 data-i18n="s5_title">Домашняя техника</h3>
+      <p class="sd" data-i18n="s5_desc">Подключение, настройка и управление домашним оборудованием.</p>
+      <div class="tags" data-i18n-tags="s5_tags">
+        <span class="tag">Принтер</span><span class="tag">Wi-Fi / роутер</span>
+        <span class="tag">Smart TV</span><span class="tag">Родительский контроль</span>
+        <span class="tag">Помощь пожилым</span>
+      </div>
     </div>
-    <div class="srv-card" data-num="06">
+
+    <!-- Digital -->
+    <div class="srv-card">
       <div class="sico"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
-      <h3 data-t="s6_title">Цифровые и бизнес-услуги</h3>
-      <p class="sd" data-t="s6_desc">Дизайн, автоматизация и онлайн-присутствие для вашего бизнеса.</p>
-      <div class="tags" data-ttags="s6_tags"></div>
+      <h3 data-i18n="s6_title">Цифровые и бизнес-услуги</h3>
+      <p class="sd" data-i18n="s6_desc">Дизайн, автоматизация и онлайн-присутствие для вашего бизнеса.</p>
+      <div class="tags" data-i18n-tags="s6_tags">
+        <span class="tag">Карточки товаров WB</span><span class="tag">Дизайн</span>
+        <span class="tag">Описания и тексты</span><span class="tag">Презентации</span>
+        <span class="tag">Баннеры / плакаты</span><span class="tag">Оформление профиля</span>
+        <span class="tag">Автоматизация</span><span class="tag">YouTube / Discord</span>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- ═══ MARQUEE ══════════════════════════════════════════ -->
+<!-- ═══ MARQUEE ════════════════════════════════════════════════ -->
 <div id="strip">
-  <div class="mq-track">
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-t="strip1">Честные цены</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-t="strip2">Данные под защитой</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-t="strip3">Быстрый результат</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-t="strip4">Индивидуально</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-t="strip1">Честные цены</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-t="strip2">Данные под защитой</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-t="strip3">Быстрый результат</span></div><div class="ss"></div>
-    <div class="si"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-t="strip4">Индивидуально</span></div><div class="ss"></div>
+  <div class="marquee-outer">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- filled by JS with translated items -->
+    </div>
   </div>
 </div>
 
-<!-- ═══ APPLE SCROLL ═════════════════════════════════════ -->
+<!-- ═══ APPLE SCROLL ══════════════════════════════════════════ -->
 <div id="apple-wrap">
   <div id="apple-sticky">
     <div class="apple-bg" id="apple-bg">ТЕХНИКА</div>
+
     <div class="astep on" data-i="0">
       <div class="astep-ico">🔍</div>
-      <p class="astep-num" data-t="a1_num">01 — Диагностика</p>
-      <h2 data-t="a1_h2">Сначала смотрим.<br>Потом делаем.</h2>
-      <p data-t="a1_p">Никаких действий без полной проверки. Перед любым вмешательством — диагностика и понятное объяснение того, что нашли.</p>
+      <p class="astep-num" data-i18n="a1_num">01 — Диагностика</p>
+      <h2 data-i18n="a1_title">Сначала смотрим.<br>Потом делаем.</h2>
+      <p data-i18n="a1_desc">Никаких действий без полной проверки. Перед любым вмешательством — диагностика и понятное объяснение того, что нашли.</p>
     </div>
+
     <div class="astep" data-i="1">
       <div class="astep-ico">🛡️</div>
-      <p class="astep-num" data-t="a2_num">02 — Защита данных</p>
-      <h2 data-t="a2_h2">Ваши данные<br>в безопасности.</h2>
-      <p data-t="a2_p">Перед серьёзными работами создаётся резервная копия. Ваши файлы, фото и документы под защитой на каждом этапе.</p>
+      <p class="astep-num" data-i18n="a2_num">02 — Защита данных</p>
+      <h2 data-i18n="a2_title">Ваши данные<br>в безопасности.</h2>
+      <p data-i18n="a2_desc">Перед серьёзными работами всегда создаётся резервная копия. Ваши файлы и документы под защитой на каждом этапе.</p>
     </div>
+
     <div class="astep" data-i="2">
       <div class="astep-ico">💬</div>
-      <p class="astep-num" data-t="a3_num">03 — Согласование</p>
-      <h2 data-t="a3_h2">Вы знаете всё,<br>что происходит.</h2>
-      <p data-t="a3_p">Каждый шаг согласовывается заранее. Цена обсуждается до начала работы. Никаких сюрпризов — только прозрачное общение.</p>
+      <p class="astep-num" data-i18n="a3_num">03 — Согласование</p>
+      <h2 data-i18n="a3_title">Вы знаете всё,<br>что происходит.</h2>
+      <p data-i18n="a3_desc">Каждый шаг согласовывается заранее. Цена обсуждается до начала. Никаких сюрпризов — только прозрачное общение.</p>
     </div>
+
     <div class="astep" data-i="3">
       <div class="astep-ico">✅</div>
-      <p class="astep-num" data-t="a4_num">04 — Результат</p>
-      <h2 data-t="a4_h2">Проверено.<br>Объяснено. Готово.</h2>
-      <p data-t="a4_p">После завершения — проверка результата вместе с вами и консультация: что сделано и как поддерживать устройство дальше.</p>
+      <p class="astep-num" data-i18n="a4_num">04 — Результат</p>
+      <h2 data-i18n="a4_title">Проверено.<br>Объяснено. Готово.</h2>
+      <p data-i18n="a4_desc">После завершения — проверка результата вместе с вами и консультация: что сделано и как поддерживать устройство дальше.</p>
     </div>
-    <div id="a-dots"><div class="adot on"></div><div class="adot"></div><div class="adot"></div><div class="adot"></div></div>
-    <div id="a-line"></div>
+
+    <div id="apple-dots">
+      <div class="adot on"></div>
+      <div class="adot"></div>
+      <div class="adot"></div>
+      <div class="adot"></div>
+    </div>
+    <div id="apple-line"></div>
   </div>
 </div>
 
-<!-- ═══ DEVICE ════════════════════════════════════════════ -->
+<!-- ═══ DEVICE ════════════════════════════════════════════════ -->
 <section id="device-sec" class="sec">
   <div class="dev-l rvl">
-    <p class="lbl" data-t="dev_lbl">Работаю аккуратно</p>
-    <h2 class="stitle" data-t="dev_title">Полный контроль<br>на каждом этапе</h2>
-    <p class="sdesc" data-t="dev_desc">От первого сообщения до финальной проверки — вы всегда в курсе. Без скрытых доплат.</p>
+    <p class="label" data-i18n="dev_label">Работаю аккуратно</p>
+    <h2 class="stitle" style="margin-bottom:1.1rem" data-i18n="dev_title">Полный контроль<br>на каждом этапе</h2>
+    <p class="sdesc" style="margin-bottom:1.5rem" data-i18n="dev_desc">От первого сообщения до финальной проверки — вы всегда в курсе. Без скрытых доплат.</p>
     <ul class="dev-list">
-      <li data-t="dev_li1">Резервное копирование данных перед началом работы</li>
-      <li data-t="dev_li2">Диагностика и понятное объяснение проблемы</li>
-      <li data-t="dev_li3">Согласование всех действий с клиентом заранее</li>
-      <li data-t="dev_li4">Проверка результата после завершения</li>
-      <li data-t="dev_li5">Консультация по дальнейшему обслуживанию</li>
+      <li data-i18n="dev_li1">Резервное копирование данных перед началом работы</li>
+      <li data-i18n="dev_li2">Диагностика и понятное объяснение проблемы</li>
+      <li data-i18n="dev_li3">Согласование всех действий с клиентом</li>
+      <li data-i18n="dev_li4">Проверка результата после завершения</li>
+      <li data-i18n="dev_li5">Консультация по дальнейшему обслуживанию</li>
     </ul>
   </div>
   <div class="dev-r rvr">
@@ -677,640 +931,599 @@ footer{background:var(--bg);border-top:1px solid var(--border);
   </div>
 </section>
 
-<!-- ═══ PRICING ══════════════════════════════════════════ -->
+<!-- ═══ PRICING ═══════════════════════════════════════════════ -->
 <section id="pricing" class="sec sec-alt">
   <div class="sec-head rv">
     <div>
-      <p class="lbl" data-t="pr_lbl">Стоимость</p>
-      <h2 class="stitle" data-t="pr_title">Ориентировочные цены</h2>
+      <p class="label" data-i18n="price_label">Стоимость</p>
+      <h2 class="stitle" data-i18n="price_title">Ориентировочные цены</h2>
     </div>
-    <p class="sdesc" data-t="pr_desc">Конечная цена зависит от сложности и обсуждается индивидуально.</p>
+    <p class="sdesc" data-i18n="price_desc">Конечная цена зависит от сложности и обсуждается индивидуально.</p>
   </div>
+
   <div class="price-cats rv">
     <div>
-      <p class="pcat-title" data-t="pc1_title">💻 Компьютеры и ноутбуки</p>
+      <p class="pcat-title" data-i18n="pc1">💻 Компьютеры и ноутбуки</p>
       <div class="price-list">
-        <div class="pr"><span class="pr-n" data-t="p1n">Чистка системы</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>14.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p2n">Полная оптимизация</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>24.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p3n">Переустановка Windows</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>29.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p1">Чистка системы</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>14.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p2">Полная оптимизация</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>24.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p3">Переустановка Windows</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>29.99€</span></div>
       </div>
     </div>
     <div>
-      <p class="pcat-title" data-t="pc2_title">💾 Апгрейд и сборка ПК</p>
+      <p class="pcat-title" data-i18n="pc2">💾 Апгрейд и сборка ПК</p>
       <div class="price-list">
-        <div class="pr"><span class="pr-n" data-t="p4n">Установка SSD / RAM</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>14.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p5n">Сборка ПК</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>39.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p6n">Подбор комплектующих</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>19.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p4">Установка SSD или RAM</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>14.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p5">Сборка ПК</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>39.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p6">Подбор комплектующих</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>19.99€</span></div>
       </div>
     </div>
     <div>
-      <p class="pcat-title" data-t="pc3_title">📱 Телефоны и планшеты</p>
+      <p class="pcat-title" data-i18n="pc3">📱 Телефоны и планшеты</p>
       <div class="price-list">
-        <div class="pr"><span class="pr-n" data-t="p7n">Чистка и оптимизация</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>9.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p8n">Перенос данных</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>14.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p9n">Замена аккумулятора</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>29.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p10n">Защитное стекло</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>9.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p11n">Олеофобное покрытие</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>9.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p7">Чистка и оптимизация</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>9.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p8">Перенос данных</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>14.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p9">Замена аккумулятора</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>29.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p10">Защитное стекло</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>9.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p11">Олеофобное покрытие</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>9.99€</span></div>
       </div>
     </div>
     <div>
-      <p class="pcat-title" data-t="pc4_title">📧 Аккаунты и почта</p>
+      <p class="pcat-title" data-i18n="pc4">📧 Аккаунты и почта</p>
       <div class="price-list">
-        <div class="pr"><span class="pr-n" data-t="p12n">Настройка почты</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>9.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p13n">Восстановление пароля</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>14.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p12">Настройка почты</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>9.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p13">Восстановление пароля</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>14.99€</span></div>
       </div>
     </div>
     <div>
-      <p class="pcat-title" data-t="pc5_title">🖥 Цифровые и бизнес-услуги</p>
+      <p class="pcat-title" data-i18n="pc5">🖥 Цифровые и бизнес-услуги</p>
       <div class="price-list">
-        <div class="pr"><span class="pr-n" data-t="p14n">Карточка товара / баннер</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>14.99€</span></div>
-        <div class="pr"><span class="pr-n" data-t="p15n">Презентация</span><span class="pr-p"><span class="pr-f" data-t="from">от</span>19.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p14">Карточка товара / баннер</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>14.99€</span></div>
+        <div class="pr"><span class="pr-n" data-i18n="p15">Презентация</span><span class="pr-p"><span class="pr-f" data-i18n="from">от</span>19.99€</span></div>
       </div>
     </div>
   </div>
-  <p class="price-note rv" data-t="pr_note">💬 Финальная цена зависит от объёма и сложности — всегда обсуждается до начала. Без скрытых доплат.</p>
+  <p class="price-note rv" data-i18n="price_note">💬 Финальная цена зависит от объёма и сложности — всегда обсуждается до начала работы. Без скрытых доплат.</p>
 </section>
 
-<!-- ═══ WHY ═══════════════════════════════════════════════ -->
-<section class="sec">
+<!-- ═══ WHY ════════════════════════════════════════════════════ -->
+<section id="why" class="sec">
   <div id="why-wrap">
     <div class="rvl">
-      <p class="lbl" data-t="why_lbl">Почему я</p>
-      <h2 class="stitle" style="margin-bottom:1.1rem" data-t="why_title">Работаю честно<br>и аккуратно</h2>
-      <p class="sdesc" data-t="why_desc">Не беру деньги вперёд. Объясняю каждый шаг понятным языком. Ваши данные и устройства в надёжных руках.</p>
+      <p class="label" data-i18n="why_label">Почему я</p>
+      <h2 class="stitle" style="margin-bottom:1.1rem" data-i18n="why_title">Работаю честно<br>и аккуратно</h2>
+      <p class="sdesc" data-i18n="why_desc">Не беру деньги вперёд. Объясняю каждый шаг понятным языком. Ваши данные и устройства в надёжных руках.</p>
     </div>
     <div class="why-grid stg">
-      <div class="why-card"><div class="why-ico">🛡️</div><h4 data-t="w1h">Данные под защитой</h4><p data-t="w1p">Резервная копия перед любым серьёзным вмешательством.</p></div>
-      <div class="why-card"><div class="why-ico">💬</div><h4 data-t="w2h">Понятное объяснение</h4><p data-t="w2p">Рассказываю что делаю и почему, без технического жаргона.</p></div>
-      <div class="why-card"><div class="why-ico">💰</div><h4 data-t="w3h">Честные цены</h4><p data-t="w3p">Цена согласовывается до начала работы. Никаких сюрпризов.</p></div>
-      <div class="why-card"><div class="why-ico">🎯</div><h4 data-t="w4h">Индивидуально</h4><p data-t="w4p">Решение под вашу ситуацию, а не шаблонный подход.</p></div>
-      <div class="why-card"><div class="why-ico">⚡</div><h4 data-t="w5h">Быстрый результат</h4><p data-t="w5p">Большинство задач решается за один-два дня.</p></div>
-      <div class="why-card"><div class="why-ico">🤝</div><h4 data-t="w6h">После завершения</h4><p data-t="w6p">Консультация по итогу — что сделано и как поддерживать.</p></div>
+      <div class="why-card"><div class="why-ico">🛡️</div><h4 data-i18n="w1_t">Данные под защитой</h4><p data-i18n="w1_d">Резервная копия перед любым серьёзным вмешательством.</p></div>
+      <div class="why-card"><div class="why-ico">💬</div><h4 data-i18n="w2_t">Понятное объяснение</h4><p data-i18n="w2_d">Рассказываю что делаю и почему, без технического жаргона.</p></div>
+      <div class="why-card"><div class="why-ico">💰</div><h4 data-i18n="w3_t">Честные цены</h4><p data-i18n="w3_d">Цена согласовывается до начала работы. Никаких сюрпризов.</p></div>
+      <div class="why-card"><div class="why-ico">🎯</div><h4 data-i18n="w4_t">Индивидуально</h4><p data-i18n="w4_d">Решение под вашу ситуацию, а не шаблонный подход.</p></div>
+      <div class="why-card"><div class="why-ico">⚡</div><h4 data-i18n="w5_t">Быстрый результат</h4><p data-i18n="w5_d">Большинство задач решается в течение одного-двух дней.</p></div>
+      <div class="why-card"><div class="why-ico">🤝</div><h4 data-i18n="w6_t">После завершения</h4><p data-i18n="w6_d">Консультация по итогу — что сделано и как поддерживать.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══════════════════════════════════════════ -->
+<!-- ═══ CONTACT ════════════════════════════════════════════════ -->
 <section id="contact">
-  <p class="lbl" data-t="c_lbl">Связаться</p>
-  <h2 class="stitle" style="margin-bottom:.65rem" data-t="c_title">Напишите мне</h2>
-  <p class="sdesc" data-t="c_desc">Все работы обсуждаются индивидуально до начала выполнения.</p>
+  <p class="label" data-i18n="ct_label">Связаться</p>
+  <h2 class="stitle" style="margin-bottom:.65rem" data-i18n="ct_title">Напишите мне</h2>
+  <p class="sdesc" data-i18n="ct_desc">Все работы обсуждаются индивидуально до начала выполнения.</p>
   <div class="cgrid">
     <form class="cform" id="contactForm" onsubmit="handleSubmit(event)">
       <div class="fg">
-        <label data-t="cf_namelbl">Ваше имя</label>
-        <input type="text" name="name" data-ph="cf_nameph" placeholder="Как вас зовут?" required/>
+        <label data-i18n="f_name_l">Ваше имя</label>
+        <input type="text" name="name" data-i18n-ph="f_name_ph" placeholder="Как вас зовут?" required/>
       </div>
       <div class="fg">
-        <label data-t="cf_srvlbl">Услуга</label>
+        <label data-i18n="f_service_l">Услуга</label>
         <select name="service">
-          <option value="" data-t="cf_srvph">Выберите услугу (необязательно)</option>
-          <option data-t="so1">Компьютеры и ноутбуки</option>
-          <option data-t="so2">Апгрейд и сборка ПК</option>
-          <option data-t="so3">Телефоны и планшеты</option>
-          <option data-t="so4">Аккаунты и почта</option>
-          <option data-t="so5">Домашняя техника</option>
-          <option data-t="so6">Цифровые / бизнес-услуги</option>
-          <option data-t="so7">Другое</option>
+          <option value="" data-i18n="f_srv0">Выберите услугу (необязательно)</option>
+          <option data-i18n="f_srv1">Компьютеры и ноутбуки</option>
+          <option data-i18n="f_srv2">Апгрейд и сборка ПК</option>
+          <option data-i18n="f_srv3">Телефоны и планшеты</option>
+          <option data-i18n="f_srv4">Аккаунты и почта</option>
+          <option data-i18n="f_srv5">Домашняя техника</option>
+          <option data-i18n="f_srv6">Цифровые / бизнес-услуги</option>
+          <option data-i18n="f_srv7">Другое</option>
         </select>
       </div>
       <div class="fg">
-        <label data-t="cf_msglbl">Сообщение</label>
-        <textarea name="message" data-ph="cf_msgph" placeholder="Опишите задачу или вопрос..." required></textarea>
+        <label data-i18n="f_msg_l">Сообщение</label>
+        <textarea name="message" data-i18n-ph="f_msg_ph" placeholder="Опишите задачу или вопрос..." required></textarea>
       </div>
       <button type="submit" class="btn-send">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        <span data-t="cf_submit">Отправить сообщение</span>
+        <span data-i18n="f_send">Отправить сообщение</span>
       </button>
-      <div class="fok" id="fok" data-t="cf_ok">✅ Сообщение получено! Отвечу в ближайшее время.</div>
+      <div class="fok" id="fok" data-i18n="f_ok">✅ Сообщение получено! Отвечу в ближайшее время.</div>
     </form>
     <div class="cinfo">
       <div>
-        <h3 data-t="c_msgh">Мессенджеры</h3>
+        <h3 data-i18n="ct_social">Мессенджеры</h3>
+        <!-- ЗАМЕНИ ссылки на свои! -->
         <div class="slinks">
-          <a href="#" id="link-wa" class="slink" target="_blank" rel="noopener">
+          <a href="https://wa.me/691809846" class="slink" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            <div><div class="sl-n">WhatsApp</div><div class="sl-s" data-t="wa_sub">Быстрый ответ</div></div>
+            <div><div class="sl-n">WhatsApp</div><div class="sl-s" data-i18n="sl_wa">Быстрый ответ</div></div>
           </a>
-          <a href="#" id="link-tg" class="slink" target="_blank" rel="noopener">
+          <a href="https://t.me/Sudo_OniT" class="slink" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            <div><div class="sl-n">Telegram</div><div class="sl-s" id="tg-sub">@username</div></div>
+            <div><div class="sl-n">Telegram</div><div class="sl-s">@Sudo_OniT</div></div>
           </a>
-          <a href="#" id="link-ig" class="slink" target="_blank" rel="noopener">
+          <a href="https://www.instagram.com/sudo_onit/" class="slink" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            <div><div class="sl-n">Instagram</div><div class="sl-s" id="ig-sub">@username</div></div>
-          </a>
-          <a href="#" id="link-fb" class="slink" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            <div><div class="sl-n">Facebook</div><div class="sl-s" data-t="fb_sub">Написать на странице</div></div>
+            <div><div class="sl-n">Instagram</div><div class="sl-s">@sudo_onit</div></div>
           </a>
         </div>
       </div>
-      <div class="cnote" data-t="c_note">🔒 Все работы обсуждаются приватно до начала. Никаких предоплат — сначала договариваемся, потом работаем.</div>
+      <div class="cnote" data-i18n="ct_note">🔒 Все работы обсуждаются приватно до начала. Никаких предоплат — сначала договариваемся, потом работаем.</div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<!-- ═══ FOOTER ════════════════════════════════════════════════ -->
 <footer>
-  <a href="#hero" class="logo-wrap">
-    <img class="logo-img-ft" id="logo-img-footer" alt="OniT" style="display:none"/>
-    <span class="logo-txt" id="logo-txt-footer">Oni<em>T</em></span>
-  </a>
+  <a href="#hero" class="logo"><span class="logo-on">Oni</span><span class="logo-it">T</span></a>
   <ul class="flinks">
-    <li><a href="#services" data-t="nav_srv">Услуги</a></li>
-    <li><a href="#pricing"  data-t="nav_price">Цены</a></li>
-    <li><a href="#why"      data-t="nav_about">О нас</a></li>
-    <li><a href="#contact"  data-t="nav_contact">Контакт</a></li>
+    <li><a href="#services" data-i18n="nav_services">Услуги</a></li>
+    <li><a href="#pricing"  data-i18n="nav_pricing">Цены</a></li>
+    <li><a href="#why"      data-i18n="nav_about">О нас</a></li>
+    <li><a href="#contact"  data-i18n="nav_contact">Контакт</a></li>
   </ul>
-  <p class="fcopy" data-t="footer_copy">© 2025 OniT. Частный специалист.</p>
+  <p class="fcopy" data-i18n="footer_copy">© 2025 OniT. Частный специалист.</p>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
 <script>
-/* ════════════════════════════════════════════════════════
-   ╔══════════════════════════════════════════════════╗
-   ║  LOGO — как добавить свой логотип               ║
-   ║                                                  ║
-   ║  1. Положи файл лого рядом с этим HTML           ║
-   ║     (PNG с прозрачным фоном — лучший вариант)    ║
-   ║                                                  ║
-   ║  2. Замени null на имя файла:                    ║
-   ║     const LOGO_SRC = 'logo.png';                 ║
-   ║                                                  ║
-   ║  3. Укажи тип фона лого:                         ║
-   ║     'transparent' — прозрачный фон  (PNG/SVG)   ║
-   ║     'white'       — белый фон        (blend off) ║
-   ║     'dark'        — тёмный/чёрный фон            ║
-   ╚══════════════════════════════════════════════════╝
-════════════════════════════════════════════════════════ */
-const LOGO_SRC     = 'OniT.jpg';   // ← имя файла лого
-const LOGO_BG_MODE = 'white';       // ← 'transparent' | 'white' | 'dark'
+/* ═══════════════════════════════════════════════════════════════
+   TRANSLATIONS
+═══════════════════════════════════════════════════════════════ */
+const T = {
+  ru: {
+    nav_services:"Услуги", nav_pricing:"Цены", nav_about:"О нас",
+    nav_contact:"Контакт", nav_write:"Написать",
+    hero_badge:"Принимаю заявки · Быстрый ответ",
+    hero_title_1:"Технические услуги", hero_title_2:"и ",
+    hero_title_u:"цифровые решения",
+    hero_sub:"ПК, ноутбуки, смартфоны, настройка и дизайн.<br>Быстро, аккуратно, по честной цене.",
+    hero_cta1:"Написать нам", hero_cta2:"Посмотреть услуги",
+    stat1:"Выполненных задач", stat2:"Опыт работы", stat2_unit:"г.",
+    stat3:"Время ответа", stat3_unit:"ч", stat4:"Честная цена",
+    srv_label:"Что я делаю", srv_title:"Услуги для людей<br>и бизнеса",
+    srv_desc:"Широкий спектр технических и цифровых услуг. Каждая задача — индивидуально.",
+    s1_title:"Компьютеры и ноутбуки", s1_desc:"Диагностика, чистка, оптимизация и восстановление системы.",
+    s1_tags:["Ускорение ПК","Чистка системы","Переустановка Windows","Драйверы","Удаление вирусов","Автозагрузка","Игровой / рабочий setup","Бэкап данных"],
+    s2_title:"Апгрейд и сборка ПК", s2_desc:"Замена комплектующих, сборка с нуля и консультация по выбору.",
+    s2_tags:["Установка SSD","Апгрейд RAM","Чистка от пыли","Термопаста","Сборка ПК","Подбор комплектующих","Проверка совместимости","Бюджетная сборка"],
+    s2_note:"⚠️ Стоимость комплектующих оплачивается отдельно. Услуга включает установку и настройку.",
+    s3_title:"Телефоны и планшеты", s3_desc:"Настройка, оптимизация и базовое техническое обслуживание.",
+    s3_tags:["Перенос данных","Настройка аккаунтов","Чистка памяти","Резервные копии","Установка приложений","Оптимизация","Замена аккумулятора","Защитное стекло","Олеофобное покрытие"],
+    s4_title:"Аккаунты и почта", s4_desc:"Помощь с настройкой и восстановлением учётных записей.",
+    s4_tags:["Настройка почты","Синхронизация","Восстановление пароля","Очистка спама","Связка аккаунтов"],
+    s5_title:"Домашняя техника", s5_desc:"Подключение, настройка и управление домашним оборудованием.",
+    s5_tags:["Принтер","Wi-Fi / роутер","Smart TV","Родительский контроль","Помощь пожилым"],
+    s6_title:"Цифровые и бизнес-услуги", s6_desc:"Дизайн, автоматизация и онлайн-присутствие для вашего бизнеса.",
+    s6_tags:["Карточки товаров WB","Дизайн","Описания и тексты","Презентации","Баннеры / плакаты","Оформление профиля","Автоматизация","YouTube / Discord"],
+    marquee:["Честные цены","Данные под защитой","Быстрый результат","Индивидуально","Без предоплат","Прозрачно"],
+    a1_num:"01 — Диагностика", a1_title:"Сначала смотрим.<br>Потом делаем.", a1_desc:"Никаких действий без полной проверки. Перед любым вмешательством — диагностика и понятное объяснение того, что нашли.",
+    a2_num:"02 — Защита данных", a2_title:"Ваши данные<br>в безопасности.", a2_desc:"Перед серьёзными работами всегда создаётся резервная копия. Ваши файлы и документы под защитой на каждом этапе.",
+    a3_num:"03 — Согласование", a3_title:"Вы знаете всё,<br>что происходит.", a3_desc:"Каждый шаг согласовывается заранее. Цена обсуждается до начала. Никаких сюрпризов — только прозрачное общение.",
+    a4_num:"04 — Результат", a4_title:"Проверено.<br>Объяснено. Готово.", a4_desc:"После завершения — проверка результата вместе с вами и консультация: что сделано и как поддерживать устройство дальше.",
+    apple_bg:["ТЕХНИКА","ДАННЫЕ","ДОВЕРИЕ","РЕЗУЛЬТАТ"],
+    dev_label:"Работаю аккуратно", dev_title:"Полный контроль<br>на каждом этапе",
+    dev_desc:"От первого сообщения до финальной проверки — вы всегда в курсе. Без скрытых доплат.",
+    dev_li1:"Резервное копирование данных перед началом работы",
+    dev_li2:"Диагностика и понятное объяснение проблемы",
+    dev_li3:"Согласование всех действий с клиентом",
+    dev_li4:"Проверка результата после завершения",
+    dev_li5:"Консультация по дальнейшему обслуживанию",
+    price_label:"Стоимость", price_title:"Ориентировочные цены",
+    price_desc:"Конечная цена зависит от сложности и обсуждается индивидуально.",
+    pc1:"💻 Компьютеры и ноутбуки", pc2:"💾 Апгрейд и сборка ПК",
+    pc3:"📱 Телефоны и планшеты", pc4:"📧 Аккаунты и почта",
+    pc5:"🖥 Цифровые и бизнес-услуги",
+    from:"от",
+    p1:"Чистка системы", p2:"Полная оптимизация", p3:"Переустановка Windows",
+    p4:"Установка SSD или RAM", p5:"Сборка ПК", p6:"Подбор комплектующих",
+    p7:"Чистка и оптимизация", p8:"Перенос данных", p9:"Замена аккумулятора",
+    p10:"Защитное стекло", p11:"Олеофобное покрытие",
+    p12:"Настройка почты", p13:"Восстановление пароля",
+    p14:"Карточка товара / баннер", p15:"Презентация",
+    price_note:"💬 Финальная цена зависит от объёма и сложности — всегда обсуждается до начала работы. Без скрытых доплат.",
+    why_label:"Почему я", why_title:"Работаю честно<br>и аккуратно",
+    why_desc:"Не беру деньги вперёд. Объясняю каждый шаг понятным языком. Ваши данные в надёжных руках.",
+    w1_t:"Данные под защитой", w1_d:"Резервная копия перед любым серьёзным вмешательством.",
+    w2_t:"Понятное объяснение", w2_d:"Рассказываю что делаю и почему, без технического жаргона.",
+    w3_t:"Честные цены", w3_d:"Цена согласовывается до начала работы. Никаких сюрпризов.",
+    w4_t:"Индивидуально", w4_d:"Решение под вашу ситуацию, а не шаблонный подход.",
+    w5_t:"Быстрый результат", w5_d:"Большинство задач решается в течение одного-двух дней.",
+    w6_t:"После завершения", w6_d:"Консультация по итогу — что сделано и как поддерживать.",
+    ct_label:"Связаться", ct_title:"Напишите мне",
+    ct_desc:"Все работы обсуждаются индивидуально до начала выполнения.",
+    ct_social:"Мессенджеры",
+    f_name_l:"Ваше имя", f_name_ph:"Как вас зовут?",
+    f_service_l:"Услуга", f_srv0:"Выберите услугу (необязательно)",
+    f_srv1:"Компьютеры и ноутбуки", f_srv2:"Апгрейд и сборка ПК",
+    f_srv3:"Телефоны и планшеты", f_srv4:"Аккаунты и почта",
+    f_srv5:"Домашняя техника", f_srv6:"Цифровые / бизнес-услуги", f_srv7:"Другое",
+    f_msg_l:"Сообщение", f_msg_ph:"Опишите задачу или вопрос...",
+    f_send:"Отправить сообщение", f_ok:"✅ Сообщение получено! Отвечу в ближайшее время.",
+    sl_wa:"Быстрый ответ", sl_fb:"Написать на странице",
+    ct_note:"🔒 Все работы обсуждаются приватно до начала. Никаких предоплат — сначала договариваемся, потом работаем.",
+    footer_copy:"© 2025 OniT. Частный специалист.",
+  },
 
-/* ════════════════════════════════════════════════════════
-   ╔══════════════════════════════════════════════════╗
-   ║  CONTACTS — заполни свои контакты               ║
-   ║                                                  ║
-   ║  WHATSAPP:  номер без + и пробелов              ║
-   ║             Пример: '37200000000'               ║
-   ║  TELEGRAM:  ник без @                           ║
-   ║             Пример: 'onit_tech'                 ║
-   ║  INSTAGRAM: твой аккаунт                        ║
-   ║             Пример: 'onit.ee'                   ║
-   ║  FACEBOOK:  имя страницы                        ║
-   ║             Пример: 'onit.page'                 ║
-   ╚══════════════════════════════════════════════════╝
-════════════════════════════════════════════════════════ */
-const CONTACTS = {
-  WHATSAPP  : 'YOURPHONE',      // ← твой номер
-  TELEGRAM  : 'YOURUSERNAME',   // ← твой telegram
-  INSTAGRAM : 'YOURUSERNAME',   // ← твой instagram
-  FACEBOOK  : 'YOURPAGE',       // ← твоя страница
+  en: {
+    nav_services:"Services", nav_pricing:"Pricing", nav_about:"About",
+    nav_contact:"Contact", nav_write:"Message",
+    hero_badge:"Accepting requests · Fast response",
+    hero_title_1:"Tech services", hero_title_2:"& ",
+    hero_title_u:"digital solutions",
+    hero_sub:"PCs, laptops, phones, setup & design.<br>Fast, accurate, at a fair price.",
+    hero_cta1:"Message us", hero_cta2:"View services",
+    stat1:"Tasks completed", stat2:"Experience", stat2_unit:"yr",
+    stat3:"Response time", stat3_unit:"h", stat4:"Fair pricing",
+    srv_label:"What I do", srv_title:"Services for people<br>and business",
+    srv_desc:"A wide range of tech and digital services. Every task is handled individually.",
+    s1_title:"Computers & Laptops", s1_desc:"Diagnostics, cleanup, optimization and system recovery.",
+    s1_tags:["PC speed boost","System cleanup","Windows reinstall","Drivers","Virus removal","Startup optimization","Gaming / work setup","Data backup"],
+    s2_title:"PC Upgrade & Build", s2_desc:"Component replacement, full builds and parts selection consulting.",
+    s2_tags:["SSD installation","RAM upgrade","Dust cleaning","Thermal paste","PC assembly","Parts selection","Compatibility check","Budget build"],
+    s2_note:"⚠️ Hardware cost is paid separately. Service includes installation and setup.",
+    s3_title:"Phones & Tablets", s3_desc:"Setup, optimization and basic technical maintenance.",
+    s3_tags:["Data transfer","Account setup","Storage cleanup","Backups","App installation","Optimization","Battery replacement","Screen protector","Oleophobic coating"],
+    s4_title:"Accounts & Email", s4_desc:"Help with setting up and recovering accounts.",
+    s4_tags:["Email setup","Sync","Password recovery","Spam cleanup","Account linking"],
+    s5_title:"Home Tech Setup", s5_desc:"Connection, configuration and management of home equipment.",
+    s5_tags:["Printer setup","Wi-Fi / router","Smart TV","Parental controls","Elderly user help"],
+    s6_title:"Digital & Business Services", s6_desc:"Design, automation and online presence for your business.",
+    s6_tags:["Product card design","Design","Texts & descriptions","Presentations","Banners / posters","Profile design","Automation","YouTube / Discord"],
+    marquee:["Fair pricing","Data protected","Fast results","Individual approach","No prepayment","Transparent"],
+    a1_num:"01 — Diagnostics", a1_title:"First we look.<br>Then we act.", a1_desc:"No action without a full check. Before any work — diagnostics and a clear explanation of what was found.",
+    a2_num:"02 — Data safety", a2_title:"Your data<br>is safe.", a2_desc:"A backup is always created before serious work. Your files and documents are protected at every stage.",
+    a3_num:"03 — Agreement", a3_title:"You know everything<br>that happens.", a3_desc:"Every step is agreed in advance. Price is discussed before start. No surprises — only transparent communication.",
+    a4_num:"04 — Result", a4_title:"Checked.<br>Explained. Done.", a4_desc:"After completion — result check together with you and a short consultation: what was done and how to maintain your device.",
+    apple_bg:["DEVICES","DATA","TRUST","RESULT"],
+    dev_label:"Working carefully", dev_title:"Full control<br>at every stage",
+    dev_desc:"From the first message to final check — you're always in the loop. No hidden fees.",
+    dev_li1:"Data backup before starting any work",
+    dev_li2:"Diagnostics and clear explanation of the issue",
+    dev_li3:"All actions agreed with the client beforehand",
+    dev_li4:"Result check after completion",
+    dev_li5:"Consultation on further maintenance",
+    price_label:"Pricing", price_title:"Estimated prices",
+    price_desc:"Final price depends on complexity and is discussed individually.",
+    pc1:"💻 Computers & Laptops", pc2:"💾 PC Upgrade & Build",
+    pc3:"📱 Phones & Tablets", pc4:"📧 Accounts & Email",
+    pc5:"🖥 Digital & Business",
+    from:"from",
+    p1:"System cleanup", p2:"Full optimization", p3:"Windows reinstall",
+    p4:"SSD or RAM installation", p5:"PC assembly", p6:"Parts selection",
+    p7:"Cleanup & optimization", p8:"Data transfer", p9:"Battery replacement",
+    p10:"Screen protector", p11:"Oleophobic coating",
+    p12:"Email setup", p13:"Password recovery",
+    p14:"Product card / banner", p15:"Presentation",
+    price_note:"💬 Final price depends on volume and complexity — always discussed before work starts. No hidden fees.",
+    why_label:"Why me", why_title:"Working honestly<br>and carefully",
+    why_desc:"No upfront payment. I explain every step in plain language. Your data and devices are in safe hands.",
+    w1_t:"Data protected", w1_d:"Backup before any serious intervention.",
+    w2_t:"Clear explanation", w2_d:"I explain what I do and why, without technical jargon.",
+    w3_t:"Fair pricing", w3_d:"Price agreed before work starts. No surprises.",
+    w4_t:"Individual approach", w4_d:"Solution for your situation, not a template.",
+    w5_t:"Fast results", w5_d:"Most tasks are completed within one or two days.",
+    w6_t:"After completion", w6_d:"Short consultation on what was done and how to maintain it.",
+    ct_label:"Contact", ct_title:"Write to me",
+    ct_desc:"All work is discussed individually before starting.",
+    ct_social:"Messengers",
+    f_name_l:"Your name", f_name_ph:"What's your name?",
+    f_service_l:"Service", f_srv0:"Select a service (optional)",
+    f_srv1:"Computers & Laptops", f_srv2:"PC Upgrade & Build",
+    f_srv3:"Phones & Tablets", f_srv4:"Accounts & Email",
+    f_srv5:"Home Tech Setup", f_srv6:"Digital / business services", f_srv7:"Other",
+    f_msg_l:"Message", f_msg_ph:"Describe your task or question...",
+    f_send:"Send message", f_ok:"✅ Message received! I'll reply shortly.",
+    sl_wa:"Fast reply", sl_fb:"Message on page",
+    ct_note:"🔒 All work is discussed privately before starting. No prepayment — we agree first, then work.",
+    footer_copy:"© 2025 OniT. Private tech specialist.",
+  },
+
+  es: {
+    nav_services:"Servicios", nav_pricing:"Precios", nav_about:"Sobre mí",
+    nav_contact:"Contacto", nav_write:"Mensaje",
+    hero_badge:"Aceptando solicitudes · Respuesta rápida",
+    hero_title_1:"Servicios técnicos", hero_title_2:"y ",
+    hero_title_u:"soluciones digitales",
+    hero_sub:"PCs, portátiles, teléfonos, configuración y diseño.<br>Rápido, cuidadoso y a precio justo.",
+    hero_cta1:"Escríbeme", hero_cta2:"Ver servicios",
+    stat1:"Tareas completadas", stat2:"Experiencia", stat2_unit:"año",
+    stat3:"Tiempo de resp.", stat3_unit:"h", stat4:"Precio justo",
+    srv_label:"Qué hago", srv_title:"Servicios para personas<br>y negocios",
+    srv_desc:"Amplia gama de servicios técnicos y digitales. Cada tarea es individual.",
+    s1_title:"Ordenadores y portátiles", s1_desc:"Diagnóstico, limpieza, optimización y recuperación del sistema.",
+    s1_tags:["Aceleración del PC","Limpieza del sistema","Reinstalar Windows","Controladores","Eliminación de virus","Arranque","Setup gaming / trabajo","Copia de seguridad"],
+    s2_title:"Actualización y ensamblaje de PC", s2_desc:"Cambio de componentes, ensamblaje completo y consultoría.",
+    s2_tags:["Instalar SSD","Ampliar RAM","Limpieza de polvo","Pasta térmica","Ensamblaje PC","Selección de piezas","Verificar compatibilidad","Montaje económico"],
+    s2_note:"⚠️ El coste del hardware se paga aparte. El servicio incluye instalación y configuración.",
+    s3_title:"Teléfonos y tabletas", s3_desc:"Configuración, optimización y mantenimiento técnico básico.",
+    s3_tags:["Transferencia de datos","Configurar cuentas","Liberar almacenamiento","Copias de seguridad","Instalar apps","Optimización","Cambio de batería","Protector de pantalla","Revestimiento oleófobo"],
+    s4_title:"Cuentas y correo", s4_desc:"Ayuda con la configuración y recuperación de cuentas.",
+    s4_tags:["Configurar correo","Sincronización","Recuperar contraseña","Limpiar spam","Vincular cuentas"],
+    s5_title:"Tecnología del hogar", s5_desc:"Conexión, configuración y gestión de equipos del hogar.",
+    s5_tags:["Impresora","Wi-Fi / router","Smart TV","Control parental","Ayuda a mayores"],
+    s6_title:"Servicios digitales y de negocio", s6_desc:"Diseño, automatización y presencia online para tu negocio.",
+    s6_tags:["Fichas de producto","Diseño","Textos y descripciones","Presentaciones","Banners / carteles","Diseño de perfil","Automatización","YouTube / Discord"],
+    marquee:["Precios justos","Datos protegidos","Resultados rápidos","Enfoque personal","Sin anticipo","Transparente"],
+    a1_num:"01 — Diagnóstico", a1_title:"Primero miramos.<br>Luego actuamos.", a1_desc:"Ninguna acción sin verificación completa. Antes de intervenir — diagnóstico y explicación clara de lo que encontramos.",
+    a2_num:"02 — Seguridad de datos", a2_title:"Tus datos<br>están seguros.", a2_desc:"Siempre se crea una copia de seguridad antes de trabajos importantes. Tus archivos y documentos protegidos en todo momento.",
+    a3_num:"03 — Acuerdo", a3_title:"Sabes todo<br>lo que ocurre.", a3_desc:"Cada paso se acuerda de antemano. El precio se discute antes de empezar. Sin sorpresas — solo comunicación transparente.",
+    a4_num:"04 — Resultado", a4_title:"Comprobado.<br>Explicado. Listo.", a4_desc:"Al terminar — verificamos el resultado juntos y una consulta breve: qué se hizo y cómo mantener el dispositivo.",
+    apple_bg:["TÉCNICA","DATOS","CONFIANZA","RESULTADO"],
+    dev_label:"Trabajo con cuidado", dev_title:"Control total<br>en cada etapa",
+    dev_desc:"Desde el primer mensaje hasta la revisión final — siempre estás informado. Sin cargos ocultos.",
+    dev_li1:"Copia de seguridad antes de comenzar",
+    dev_li2:"Diagnóstico y explicación clara del problema",
+    dev_li3:"Todas las acciones acordadas con el cliente",
+    dev_li4:"Verificación del resultado al finalizar",
+    dev_li5:"Consulta sobre mantenimiento posterior",
+    price_label:"Precios", price_title:"Precios orientativos",
+    price_desc:"El precio final depende de la complejidad y se habla individualmente.",
+    pc1:"💻 Ordenadores y portátiles", pc2:"💾 Actualización y ensamblaje",
+    pc3:"📱 Teléfonos y tabletas", pc4:"📧 Cuentas y correo",
+    pc5:"🖥 Servicios digitales y negocio",
+    from:"desde",
+    p1:"Limpieza del sistema", p2:"Optimización completa", p3:"Reinstalar Windows",
+    p4:"Instalar SSD o RAM", p5:"Ensamblar PC", p6:"Selección de piezas",
+    p7:"Limpieza y optimización", p8:"Transferencia de datos", p9:"Cambio de batería",
+    p10:"Protector de pantalla", p11:"Revestimiento oleófobo",
+    p12:"Configurar correo", p13:"Recuperar contraseña",
+    p14:"Ficha de producto / banner", p15:"Presentación",
+    price_note:"💬 El precio final depende del volumen y complejidad — siempre se habla antes de empezar. Sin cargos ocultos.",
+    why_label:"Por qué yo", why_title:"Trabajo honesto<br>y cuidadoso",
+    why_desc:"Sin pago anticipado. Explico cada paso en lenguaje sencillo. Tus datos están en buenas manos.",
+    w1_t:"Datos protegidos", w1_d:"Copia de seguridad antes de cualquier intervención seria.",
+    w2_t:"Explicación clara", w2_d:"Explico qué hago y por qué, sin jerga técnica.",
+    w3_t:"Precios justos", w3_d:"Precio acordado antes de empezar. Sin sorpresas.",
+    w4_t:"Enfoque individual", w4_d:"Solución para tu situación, no una plantilla.",
+    w5_t:"Resultados rápidos", w5_d:"La mayoría de tareas se completan en uno o dos días.",
+    w6_t:"Al terminar", w6_d:"Consulta breve sobre qué se hizo y cómo mantenerlo.",
+    ct_label:"Contacto", ct_title:"Escríbeme",
+    ct_desc:"Todo el trabajo se discute individualmente antes de comenzar.",
+    ct_social:"Mensajería",
+    f_name_l:"Tu nombre", f_name_ph:"¿Cómo te llamas?",
+    f_service_l:"Servicio", f_srv0:"Elige un servicio (opcional)",
+    f_srv1:"Ordenadores y portátiles", f_srv2:"Actualización y ensamblaje",
+    f_srv3:"Teléfonos y tabletas", f_srv4:"Cuentas y correo",
+    f_srv5:"Tecnología del hogar", f_srv6:"Servicios digitales / negocio", f_srv7:"Otro",
+    f_msg_l:"Mensaje", f_msg_ph:"Describe tu tarea o pregunta...",
+    f_send:"Enviar mensaje", f_ok:"✅ ¡Mensaje recibido! Te responderé en breve.",
+    sl_wa:"Respuesta rápida", sl_fb:"Escribir en la página",
+    ct_note:"🔒 Todo se discute en privado antes de empezar. Sin anticipos — primero acordamos, luego trabajamos.",
+    footer_copy:"© 2025 OniT. Especialista técnico privado.",
+  }
 };
 
-/* ══ APPLY LOGO ════════════════════════════════════════ */
-if(LOGO_SRC){
-  // Установить класс blend-mode на body
-  if(LOGO_BG_MODE==='white') document.body.classList.add('logo-white');
-  else if(LOGO_BG_MODE==='dark') document.body.classList.add('logo-dark');
+/* ═══════════════════════════════════════════════════════════════
+   LANGUAGE ENGINE
+═══════════════════════════════════════════════════════════════ */
+let currentLang = localStorage.getItem('lang') || 'ru';
 
-  // Навбар
-  const navImg = document.getElementById('logo-img');
-  const navTxt = document.getElementById('logo-txt');
-  if(navImg){ navImg.src=LOGO_SRC; navImg.style.display='block'; }
-  if(navTxt) navTxt.style.display='none';
+function applyLang(lang, animate=true) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
 
-  // Hero — большое лого
-  const heroWrap = document.getElementById('hero-logo-wrap');
-  const heroImg  = document.getElementById('hero-logo-img');
-  if(heroWrap && heroImg){
-    heroImg.src = LOGO_SRC;
-    heroWrap.style.display = 'block';
-    // Убираем hero-pill верхний отступ, т.к. лого уже задаёт ритм
-    const pill = document.querySelector('.hero-pill');
-    if(pill) pill.style.marginBottom = '1.25rem';
+  const doUpdate = () => {
+    // Simple text/innerHTML elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Placeholders
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (t[key]) el.placeholder = t[key];
+    });
+
+    // Tag arrays
+    document.querySelectorAll('[data-i18n-tags]').forEach(el => {
+      const key = el.getAttribute('data-i18n-tags');
+      if (t[key] && Array.isArray(t[key])) {
+        el.innerHTML = t[key].map(tag => `<span class="tag">${tag}</span>`).join('');
+      }
+    });
+
+    // Marquee rebuild
+    buildMarquee(lang);
+
+    // Apple scroll bg words
+    // will be picked up on next scroll event
+  };
+
+  if (animate) {
+    // Fade body content
+    const body = document.body;
+    body.style.transition = 'opacity .18s ease';
+    body.style.opacity = '0';
+    setTimeout(() => {
+      doUpdate();
+      body.style.opacity = '1';
+    }, 180);
+  } else {
+    doUpdate();
   }
 
-  // Футер
-  const ftImg = document.getElementById('logo-img-footer');
-  const ftTxt = document.getElementById('logo-txt-footer');
-  if(ftImg){ ftImg.src=LOGO_SRC; ftImg.style.display='block'; }
-  if(ftTxt) ftTxt.style.display='none';
-}
-
-/* ══ APPLY CONTACTS ════════════════════════════════════ */
-document.getElementById('link-wa').href=`https://wa.me/${CONTACTS.WHATSAPP}`;
-document.getElementById('link-tg').href=`https://t.me/${CONTACTS.TELEGRAM}`;
-document.getElementById('link-ig').href=`https://instagram.com/${CONTACTS.INSTAGRAM}`;
-document.getElementById('link-fb').href=`https://facebook.com/${CONTACTS.FACEBOOK}`;
-document.getElementById('tg-sub').textContent=`@${CONTACTS.TELEGRAM}`;
-document.getElementById('ig-sub').textContent=`@${CONTACTS.INSTAGRAM}`;
-
-/* ════════════════════════════════════════════════════════
-   TRANSLATIONS
-════════════════════════════════════════════════════════ */
-const T={
-ru:{
-  nav_srv:'Услуги',nav_price:'Цены',nav_about:'О нас',nav_contact:'Контакт',nav_write:'Написать',
-  hero_pill:'Принимаю заявки · Быстрый ответ',
-  hero_title:'Технические услуги<br>и <u>цифровые решения</u>',
-  hero_sub:'ПК, ноутбуки, смартфоны, настройка и дизайн.<br>Быстро, аккуратно, по честной цене.',
-  hero_btn1:'Написать нам',hero_btn2:'Посмотреть услуги',
-  hero_s1l:'Выполненных задач',hero_s2n:'1 год',hero_s2l:'Опыт работы',
-  hero_s3n_unit:'ч',hero_s3l:'Время ответа',hero_s4l:'Честная цена',
-  srv_lbl:'Что я делаю',srv_title:'Услуги для людей<br>и бизнеса',
-  srv_desc:'Широкий спектр технических и цифровых услуг. Каждая задача — индивидуально.',
-  s1_title:'Компьютеры и ноутбуки',s1_desc:'Диагностика, чистка, оптимизация и восстановление системы.',
-  s1_tags:['Ускорение ПК','Чистка системы','Переустановка Windows','Драйверы','Удаление вирусов','Автозагрузка','Игровой / рабочий setup','Бэкап данных'],
-  s2_title:'Апгрейд и сборка ПК',s2_desc:'Замена комплектующих, сборка с нуля, консультация по выбору.',
-  s2_tags:['Установка SSD','Апгрейд RAM','Чистка от пыли','Термопаста','Сборка ПК','Подбор комплектующих','Проверка совместимости','Бюджетная сборка'],
-  s2_note:'⚠️ Стоимость комплектующих оплачивается отдельно. Услуга включает установку и настройку.',
-  s3_title:'Телефоны и планшеты',s3_desc:'Настройка, оптимизация и базовое техническое обслуживание.',
-  s3_tags:['Перенос данных','Настройка аккаунтов','Чистка памяти','Резервные копии','Установка приложений','Оптимизация','Замена аккумулятора','Защитное стекло','Олеофобное покрытие'],
-  s4_title:'Аккаунты и почта',s4_desc:'Помощь с настройкой и восстановлением учётных записей.',
-  s4_tags:['Настройка почты','Синхронизация','Восстановление пароля','Очистка спама','Связка аккаунтов'],
-  s5_title:'Домашняя техника',s5_desc:'Подключение, настройка и управление домашним оборудованием.',
-  s5_tags:['Принтер','Wi-Fi / роутер','Smart TV','Родительский контроль','Помощь пожилым'],
-  s6_title:'Цифровые и бизнес-услуги',s6_desc:'Дизайн, автоматизация и онлайн-присутствие для вашего бизнеса.',
-  s6_tags:['Карточки товаров WB','Дизайн','Описания и тексты','Презентации','Баннеры / плакаты','Оформление профиля','Автоматизация','YouTube / Discord'],
-  strip1:'Честные цены',strip2:'Данные под защитой',strip3:'Быстрый результат',strip4:'Индивидуально',
-  a1_num:'01 — Диагностика',a1_h2:'Сначала смотрим.<br>Потом делаем.',
-  a1_p:'Никаких действий без полной проверки. Перед любым вмешательством — диагностика и понятное объяснение того, что нашли.',
-  a2_num:'02 — Защита данных',a2_h2:'Ваши данные<br>в безопасности.',
-  a2_p:'Перед серьёзными работами создаётся резервная копия. Ваши файлы, фото и документы под защитой на каждом этапе.',
-  a3_num:'03 — Согласование',a3_h2:'Вы знаете всё,<br>что происходит.',
-  a3_p:'Каждый шаг согласовывается заранее. Цена обсуждается до начала работы. Никаких сюрпризов — только прозрачное общение.',
-  a4_num:'04 — Результат',a4_h2:'Проверено.<br>Объяснено. Готово.',
-  a4_p:'После завершения — проверка результата вместе с вами и консультация: что сделано и как поддерживать устройство дальше.',
-  bgWords:['ТЕХНИКА','ДАННЫЕ','ДОВЕРИЕ','РЕЗУЛЬТАТ'],
-  dev_lbl:'Работаю аккуратно',dev_title:'Полный контроль<br>на каждом этапе',
-  dev_desc:'От первого сообщения до финальной проверки — вы всегда в курсе. Без скрытых доплат.',
-  dev_li1:'Резервное копирование данных перед началом работы',
-  dev_li2:'Диагностика и понятное объяснение проблемы',
-  dev_li3:'Согласование всех действий с клиентом заранее',
-  dev_li4:'Проверка результата после завершения',
-  dev_li5:'Консультация по дальнейшему обслуживанию',
-  pr_lbl:'Стоимость',pr_title:'Ориентировочные цены',
-  pr_desc:'Конечная цена зависит от сложности задачи и обсуждается индивидуально.',
-  from:'от',
-  pc1_title:'💻 Компьютеры и ноутбуки',pc2_title:'💾 Апгрейд и сборка ПК',
-  pc3_title:'📱 Телефоны и планшеты',pc4_title:'📧 Аккаунты и почта',pc5_title:'🖥 Цифровые и бизнес-услуги',
-  p1n:'Чистка системы',p2n:'Полная оптимизация',p3n:'Переустановка Windows',
-  p4n:'Установка SSD / RAM',p5n:'Сборка ПК',p6n:'Подбор комплектующих',
-  p7n:'Чистка и оптимизация',p8n:'Перенос данных',p9n:'Замена аккумулятора',
-  p10n:'Защитное стекло',p11n:'Олеофобное покрытие',p12n:'Настройка почты',p13n:'Восстановление пароля',
-  p14n:'Карточка товара / баннер',p15n:'Презентация',
-  pr_note:'💬 Финальная цена зависит от объёма и сложности — всегда обсуждается до начала. Без скрытых доплат.',
-  why_lbl:'Почему я',why_title:'Работаю честно<br>и аккуратно',
-  why_desc:'Не беру деньги вперёд. Объясняю каждый шаг понятным языком. Ваши данные и устройства в надёжных руках.',
-  w1h:'Данные под защитой',w1p:'Резервная копия перед любым серьёзным вмешательством.',
-  w2h:'Понятное объяснение',w2p:'Рассказываю что делаю и почему, без технического жаргона.',
-  w3h:'Честные цены',w3p:'Цена согласовывается до начала работы. Никаких сюрпризов.',
-  w4h:'Индивидуально',w4p:'Решение под вашу ситуацию, а не шаблонный подход.',
-  w5h:'Быстрый результат',w5p:'Большинство задач решается за один-два дня.',
-  w6h:'После завершения',w6p:'Консультация по итогу — что сделано и как поддерживать.',
-  c_lbl:'Связаться',c_title:'Напишите мне',c_desc:'Все работы обсуждаются индивидуально до начала выполнения.',
-  c_msgh:'Мессенджеры',
-  cf_namelbl:'Ваше имя',cf_nameph:'Как вас зовут?',
-  cf_srvlbl:'Услуга',cf_srvph:'Выберите услугу (необязательно)',
-  so1:'Компьютеры и ноутбуки',so2:'Апгрейд и сборка ПК',so3:'Телефоны и планшеты',
-  so4:'Аккаунты и почта',so5:'Домашняя техника',so6:'Цифровые / бизнес-услуги',so7:'Другое',
-  cf_msglbl:'Сообщение',cf_msgph:'Опишите задачу или вопрос...',
-  cf_submit:'Отправить сообщение',cf_ok:'✅ Сообщение получено! Отвечу в ближайшее время.',
-  wa_sub:'Быстрый ответ',fb_sub:'Написать на странице',
-  c_note:'🔒 Все работы обсуждаются приватно до начала. Никаких предоплат — сначала договариваемся, потом работаем.',
-  footer_copy:'© 2025 OniT. Частный специалист.',
-},
-
-en:{
-  nav_srv:'Services',nav_price:'Pricing',nav_about:'About',nav_contact:'Contact',nav_write:'Write',
-  hero_pill:'Taking requests · Fast response',
-  hero_title:'Tech services<br>& <u>digital solutions</u>',
-  hero_sub:'PCs, laptops, smartphones, setup & design.<br>Fast, careful, honest pricing.',
-  hero_btn1:'Write to us',hero_btn2:'View services',
-  hero_s1l:'Tasks completed',hero_s2n:'1 yr',hero_s2l:'Experience',
-  hero_s3n_unit:'h',hero_s3l:'Response time',hero_s4l:'Fair pricing',
-  srv_lbl:'What I do',srv_title:'Services for people<br>& business',
-  srv_desc:'Wide range of tech & digital services. Every task handled individually.',
-  s1_title:'Computers & Laptops',s1_desc:'Diagnostics, cleanup, optimization and system recovery.',
-  s1_tags:['PC Speed Boost','System Cleanup','Windows Reinstall','Drivers','Virus Removal','Startup Fix','Gaming / Work Setup','Data Backup'],
-  s2_title:'PC Upgrade & Build',s2_desc:'Parts replacement, full builds and component selection.',
-  s2_tags:['SSD Install','RAM Upgrade','Dust Cleaning','Thermal Paste','PC Assembly','Parts Selection','Compatibility Check','Budget Build'],
-  s2_note:'⚠️ Hardware costs are paid separately. Service includes installation and setup.',
-  s3_title:'Phones & Tablets',s3_desc:'Setup, optimization and basic technical maintenance.',
-  s3_tags:['Data Transfer','Account Setup','Storage Cleanup','Backup Setup','App Install','Optimization','Battery Replacement','Screen Protector','Oleophobic Coating'],
-  s4_title:'Accounts & Email',s4_desc:'Help with account setup and recovery.',
-  s4_tags:['Email Setup','Device Sync','Password Recovery','Spam Cleanup','Account Linking'],
-  s5_title:'Home Tech Setup',s5_desc:'Connecting, configuring and managing home equipment.',
-  s5_tags:['Printer Setup','Wi-Fi / Router','Smart TV','Parental Controls','Help for Elderly'],
-  s6_title:'Digital & Business',s6_desc:'Design, automation and online presence for your business.',
-  s6_tags:['Product Cards','Design','Descriptions & Texts','Presentations','Banners / Posters','Profile Design','Automation Scripts','YouTube / Discord'],
-  strip1:'Fair pricing',strip2:'Data protected',strip3:'Fast results',strip4:'Individual approach',
-  a1_num:'01 — Diagnostics',a1_h2:'First we check.<br>Then we act.',
-  a1_p:'No actions without a full check. Before any work — diagnostics and a clear explanation of what was found.',
-  a2_num:'02 — Data protection',a2_h2:'Your data<br>is safe.',
-  a2_p:'Before serious work, a backup is always made. Your files, photos and documents are fully protected at every step.',
-  a3_num:'03 — Agreement',a3_h2:'You know everything<br>that happens.',
-  a3_p:'Every step is agreed in advance. Price is set before starting. No surprises — only transparent communication.',
-  a4_num:'04 — Result',a4_h2:'Checked.<br>Explained. Done.',
-  a4_p:'After completion — result check together with you and a consultation on what was done and how to maintain the device.',
-  bgWords:['TECH','DATA','TRUST','RESULT'],
-  dev_lbl:'I work carefully',dev_title:'Full control<br>at every step',
-  dev_desc:'From the first message to the final check — you are always informed. No hidden fees.',
-  dev_li1:'Data backup before starting any work',dev_li2:'Diagnostics and clear explanation of the issue',
-  dev_li3:'All actions agreed with the client in advance',dev_li4:'Result verification after completion',
-  dev_li5:'Consultation on further device maintenance',
-  pr_lbl:'Pricing',pr_title:'Estimated prices',
-  pr_desc:'Final price depends on task complexity and is discussed individually.',
-  from:'from',
-  pc1_title:'💻 Computers & Laptops',pc2_title:'💾 PC Upgrade & Build',
-  pc3_title:'📱 Phones & Tablets',pc4_title:'📧 Accounts & Email',pc5_title:'🖥 Digital & Business',
-  p1n:'System Cleanup',p2n:'Full Optimization',p3n:'Windows Reinstall',
-  p4n:'SSD / RAM Install',p5n:'PC Build',p6n:'Parts Selection',
-  p7n:'Phone Cleanup',p8n:'Data Transfer',p9n:'Battery Replacement',
-  p10n:'Screen Protector',p11n:'Oleophobic Coating',p12n:'Email Setup',p13n:'Password Recovery',
-  p14n:'Product Card / Banner',p15n:'Presentation',
-  pr_note:'💬 Final price depends on scope and complexity — always discussed before starting. No hidden charges.',
-  why_lbl:'Why me',why_title:'Honest work,<br>careful approach',
-  why_desc:'No upfront payments. I explain every step in plain language. Your data and devices are in safe hands.',
-  w1h:'Data protected',w1p:'Full backup before any serious intervention.',
-  w2h:'Clear explanations',w2p:'I explain what I do and why, without technical jargon.',
-  w3h:'Fair prices',w3p:'Price agreed before starting. No surprises.',
-  w4h:'Individual approach',w4p:'A solution for your specific situation, not a template.',
-  w5h:'Fast results',w5p:'Most tasks are completed within one or two days.',
-  w6h:'After completion',w6p:'Brief consultation — what was done and how to maintain it.',
-  c_lbl:'Contact',c_title:'Write to me',c_desc:'All work is discussed individually before starting.',
-  c_msgh:'Messengers',
-  cf_namelbl:'Your name',cf_nameph:'How should I call you?',
-  cf_srvlbl:'Service',cf_srvph:'Select a service (optional)',
-  so1:'Computers & Laptops',so2:'PC Upgrade & Build',so3:'Phones & Tablets',
-  so4:'Accounts & Email',so5:'Home Tech Setup',so6:'Digital / Business Services',so7:'Other',
-  cf_msglbl:'Message',cf_msgph:'Describe your task or question...',
-  cf_submit:'Send message',cf_ok:'✅ Message received! I\'ll get back to you shortly.',
-  wa_sub:'Fast response',fb_sub:'Write on page',
-  c_note:'🔒 All work is discussed privately before starting. No prepayment — we agree first, then work.',
-  footer_copy:'© 2025 OniT. Private specialist.',
-},
-
-es:{
-  nav_srv:'Servicios',nav_price:'Precios',nav_about:'Acerca',nav_contact:'Contacto',nav_write:'Escribir',
-  hero_pill:'Aceptando solicitudes · Respuesta rápida',
-  hero_title:'Servicios técnicos<br>y <u>soluciones digitales</u>',
-  hero_sub:'PCs, portátiles, smartphones, configuración y diseño.<br>Rápido, cuidadoso, precio honesto.',
-  hero_btn1:'Escríbenos',hero_btn2:'Ver servicios',
-  hero_s1l:'Tareas completadas',hero_s2n:'1 año',hero_s2l:'Experiencia',
-  hero_s3n_unit:'h',hero_s3l:'Tiempo de respuesta',hero_s4l:'Precio justo',
-  srv_lbl:'Qué hago',srv_title:'Servicios para personas<br>y empresas',
-  srv_desc:'Amplia gama de servicios técnicos y digitales. Cada tarea se trata de forma individual.',
-  s1_title:'Computadoras y portátiles',s1_desc:'Diagnóstico, limpieza, optimización y recuperación del sistema.',
-  s1_tags:['Acelerar PC','Limpieza del sistema','Reinstalar Windows','Controladores','Eliminar virus','Inicio rápido','Setup gaming / trabajo','Copia de seguridad'],
-  s2_title:'Mejoras y ensamblaje',s2_desc:'Reemplazo de componentes, montaje completo y asesoramiento.',
-  s2_tags:['Instalar SSD','Ampliar RAM','Limpieza de polvo','Pasta térmica','Ensamblaje PC','Selección de piezas','Compatibilidad','Montaje económico'],
-  s2_note:'⚠️ El coste de componentes se paga aparte. El servicio incluye instalación y configuración.',
-  s3_title:'Teléfonos y tablets',s3_desc:'Configuración, optimización y mantenimiento técnico básico.',
-  s3_tags:['Transferencia de datos','Cuentas','Limpiar almacenamiento','Copias de seguridad','Instalar apps','Optimización','Cambiar batería','Protector de pantalla','Recubrimiento oleofóbico'],
-  s4_title:'Cuentas y correo',s4_desc:'Ayuda con configuración y recuperación de cuentas.',
-  s4_tags:['Configurar correo','Sincronización','Recuperar contraseña','Limpiar spam','Vincular cuentas'],
-  s5_title:'Tecnología del hogar',s5_desc:'Conexión, configuración y gestión de equipos domésticos.',
-  s5_tags:['Impresora','Wi-Fi / Router','Smart TV','Control parental','Ayuda a mayores'],
-  s6_title:'Servicios digitales',s6_desc:'Diseño, automatización y presencia en línea para tu negocio.',
-  s6_tags:['Fichas de producto','Diseño','Textos y descripciones','Presentaciones','Banners / carteles','Perfil profesional','Scripts automáticos','YouTube / Discord'],
-  strip1:'Precios justos',strip2:'Datos protegidos',strip3:'Resultados rápidos',strip4:'Trato individual',
-  a1_num:'01 — Diagnóstico',a1_h2:'Primero revisamos.<br>Luego actuamos.',
-  a1_p:'Ninguna acción sin un diagnóstico completo. Antes de cualquier intervención — revisión y explicación clara de lo encontrado.',
-  a2_num:'02 — Protección de datos',a2_h2:'Tus datos<br>están seguros.',
-  a2_p:'Antes de trabajos serios, siempre se crea una copia de seguridad. Tus archivos y fotos están protegidos en cada paso.',
-  a3_num:'03 — Acuerdo',a3_h2:'Sabes todo<br>lo que ocurre.',
-  a3_p:'Cada paso se acuerda con antelación. El precio se establece antes de empezar. Sin sorpresas — solo comunicación transparente.',
-  a4_num:'04 — Resultado',a4_h2:'Verificado.<br>Explicado. Listo.',
-  a4_p:'Tras terminar — revisión del resultado contigo y una consulta breve sobre qué se hizo y cómo mantener el dispositivo.',
-  bgWords:['TÉCNICA','DATOS','CONFIANZA','RESULTADO'],
-  dev_lbl:'Trabajo con cuidado',dev_title:'Control total<br>en cada paso',
-  dev_desc:'Desde el primer mensaje hasta la verificación final — siempre estás informado. Sin cargos ocultos.',
-  dev_li1:'Copia de seguridad antes de comenzar cualquier trabajo',
-  dev_li2:'Diagnóstico y explicación clara del problema',
-  dev_li3:'Todas las acciones acordadas con el cliente de antemano',
-  dev_li4:'Verificación del resultado tras la finalización',
-  dev_li5:'Consulta sobre el mantenimiento futuro',
-  pr_lbl:'Precios',pr_title:'Precios orientativos',
-  pr_desc:'El precio final depende de la complejidad y se acuerda individualmente.',
-  from:'desde',
-  pc1_title:'💻 Computadoras y portátiles',pc2_title:'💾 Mejoras y ensamblaje',
-  pc3_title:'📱 Teléfonos y tablets',pc4_title:'📧 Cuentas y correo',pc5_title:'🖥 Servicios digitales',
-  p1n:'Limpieza del sistema',p2n:'Optimización completa',p3n:'Reinstalar Windows',
-  p4n:'Instalar SSD / RAM',p5n:'Ensamblaje PC',p6n:'Selección de piezas',
-  p7n:'Limpieza de teléfono',p8n:'Transferencia de datos',p9n:'Cambiar batería',
-  p10n:'Protector de pantalla',p11n:'Recubrimiento oleofóbico',p12n:'Configurar correo',p13n:'Recuperar contraseña',
-  p14n:'Ficha de producto / banner',p15n:'Presentación',
-  pr_note:'💬 El precio final depende del alcance y la complejidad — siempre se habla antes de empezar. Sin cargos ocultos.',
-  why_lbl:'Por qué yo',why_title:'Trabajo honesto<br>y cuidadoso',
-  why_desc:'Sin pagos anticipados. Explico cada paso en lenguaje sencillo. Tus datos y dispositivos están en buenas manos.',
-  w1h:'Datos protegidos',w1p:'Copia de seguridad antes de cualquier intervención importante.',
-  w2h:'Explicaciones claras',w2p:'Explico qué hago y por qué, sin tecnicismos.',
-  w3h:'Precios justos',w3p:'Precio acordado antes de empezar. Sin sorpresas.',
-  w4h:'Trato individual',w4p:'Solución para tu situación específica, no una plantilla.',
-  w5h:'Resultados rápidos',w5p:'La mayoría de tareas se completan en uno o dos días.',
-  w6h:'Tras terminar',w6p:'Consulta breve — qué se hizo y cómo mantener el dispositivo.',
-  c_lbl:'Contacto',c_title:'Escríbeme',c_desc:'Todo el trabajo se habla individualmente antes de comenzar.',
-  c_msgh:'Mensajería',
-  cf_namelbl:'Tu nombre',cf_nameph:'¿Cómo te llamas?',
-  cf_srvlbl:'Servicio',cf_srvph:'Selecciona un servicio (opcional)',
-  so1:'Computadoras y portátiles',so2:'Mejoras y ensamblaje',so3:'Teléfonos y tablets',
-  so4:'Cuentas y correo',so5:'Tecnología del hogar',so6:'Servicios digitales',so7:'Otro',
-  cf_msglbl:'Mensaje',cf_msgph:'Describe tu tarea o pregunta...',
-  cf_submit:'Enviar mensaje',cf_ok:'✅ ¡Mensaje recibido! Te responderé pronto.',
-  wa_sub:'Respuesta rápida',fb_sub:'Escribir en la página',
-  c_note:'🔒 Todo se habla en privado antes de empezar. Sin pago anticipado — primero acordamos, luego trabajamos.',
-  footer_copy:'© 2025 OniT. Especialista privado.',
-}
-};
-
-/* ════════════════════════════════════════════════════════
-   LANGUAGE ENGINE
-════════════════════════════════════════════════════════ */
-let curLang = localStorage.getItem('lang') || 'ru';
-
-function applyLang(lang){
-  curLang=lang;
-  localStorage.setItem('lang',lang);
-  const t=T[lang];
-  document.documentElement.lang=lang;
-
-  // text nodes with data-t
-  document.querySelectorAll('[data-t]').forEach(el=>{
-    const key=el.getAttribute('data-t');
-    if(t[key]!==undefined){
-      if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
-      el.innerHTML=t[key];
-    }
-  });
-
-  // placeholders
-  document.querySelectorAll('[data-ph]').forEach(el=>{
-    const key=el.getAttribute('data-ph');
-    if(t[key]) el.placeholder=t[key];
-  });
-
-  // tag arrays
-  document.querySelectorAll('[data-ttags]').forEach(el=>{
-    const key=el.getAttribute('data-ttags');
-    const arr=t[key];
-    if(Array.isArray(arr)){
-      el.innerHTML=arr.map(s=>`<span class="tag">${s}</span>`).join('');
-    }
-  });
-
-  // apple bg words
-  if(t.bgWords) window._bgWords=t.bgWords;
-
-  // active lang button
-  document.querySelectorAll('.lang-btn').forEach(b=>{
-    b.classList.toggle('active',b.getAttribute('data-lang')===lang);
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
   });
 }
 
-document.querySelectorAll('.lang-btn').forEach(b=>{
-  b.addEventListener('click',()=>{applyLang(b.getAttribute('data-lang'));});
+function buildMarquee(lang) {
+  const items = T[lang].marquee;
+  const icons = [
+    '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
+    '<svg viewBox="0 0 24 24" width="16" height="16"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+    '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  ];
+  // Double the array for seamless loop
+  const allItems = [...items, ...items];
+  const track = document.getElementById('marqueeTrack');
+  if (!track) return;
+  track.innerHTML = allItems.map((item, i) =>
+    `<div class="si">${icons[i % icons.length]}${item}</div><div class="ss"></div>`
+  ).join('');
+}
+
+// Init
+applyLang(currentLang, false);
+
+// Lang button listeners
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
 });
 
-applyLang(curLang);
-
-/* ════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    THEME
-════════════════════════════════════════════════════════ */
-const html=document.documentElement;
-const tbtn=document.getElementById('tbtn');
-const sunI=document.getElementById('ico-sun');
-const moonI=document.getElementById('ico-moon');
-function sysTh(){return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+═══════════════════════════════════════════════════════════════ */
+const html = document.documentElement;
+const tbtn = document.getElementById('tbtn');
+const sunI = document.getElementById('ico-sun');
+const moonI = document.getElementById('ico-moon');
+
+function sysTh(){ return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'; }
 function applyTh(t){
   html.setAttribute('data-theme',t);
   localStorage.setItem('th',t);
-  sunI.style.display=t==='dark'?'block':'none';
-  moonI.style.display=t==='dark'?'none':'block';
+  sunI.style.display  = t==='dark'?'block':'none';
+  moonI.style.display = t==='dark'?'none':'block';
 }
-applyTh(localStorage.getItem('th')||sysTh());
+applyTh(localStorage.getItem('th') || sysTh());
 tbtn.addEventListener('click',()=>applyTh(html.getAttribute('data-theme')==='dark'?'light':'dark'));
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',e=>{
-  if(!localStorage.getItem('th'))applyTh(e.matches?'dark':'light');
+  if(!localStorage.getItem('th')) applyTh(e.matches?'dark':'light');
 });
 
-/* ════════════════════════════════════════════════════════
-   NAV + PROGRESS
-════════════════════════════════════════════════════════ */
-const nav=document.getElementById('nav');
-const pg=document.getElementById('prog');
+/* ═══════════════════════════════════════════════════════════════
+   NAV + SCROLL PROGRESS
+═══════════════════════════════════════════════════════════════ */
+const nav = document.getElementById('nav');
+const pg  = document.getElementById('prog');
 window.addEventListener('scroll',()=>{
-  nav.classList.toggle('up',scrollY>30);
-  const max=document.documentElement.scrollHeight-innerHeight;
-  pg.style.width=(scrollY/max*100)+'%';
+  nav.classList.toggle('up', scrollY > 30);
+  const max = document.documentElement.scrollHeight - innerHeight;
+  if(max > 0) pg.style.width = (scrollY/max*100)+'%';
 },{passive:true});
 
-/* ═ HAMBURGER ════════════════════════════════════════════ */
-const ham=document.getElementById('ham');
-const mob=document.getElementById('mob');
-ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('on');});
-function closeMob(){ham.classList.remove('open');mob.classList.remove('on');}
+/* ═══════════════════════════════════════════════════════════════
+   HAMBURGER
+═══════════════════════════════════════════════════════════════ */
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mob');
+ham.addEventListener('click',()=>{
+  mob.classList.toggle('on');
+  ham.classList.toggle('open');
+});
+function closeMob(){
+  mob.classList.remove('on');
+  ham.classList.remove('open');
+}
 
-/* ═ REVEAL ═══════════════════════════════════════════════ */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
-},{threshold:.1});
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL ON SCROLL
+═══════════════════════════════════════════════════════════════ */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+  });
+},{threshold:.08});
 document.querySelectorAll('.rv,.rvl,.rvr,.stg').forEach(el=>io.observe(el));
 
-/* ═ LAPTOP PARALLAX ══════════════════════════════════════ */
-const lm=document.getElementById('lm');
+/* ═══════════════════════════════════════════════════════════════
+   LAPTOP PARALLAX
+═══════════════════════════════════════════════════════════════ */
+const lmEl = document.getElementById('lm');
 let raf0;
 window.addEventListener('scroll',()=>{
-  if(raf0)return;
-  raf0=requestAnimationFrame(()=>{
-    const r=lm.getBoundingClientRect();
-    const off=Math.max(-1,Math.min(1,(r.top+r.height/2-innerHeight/2)/(innerHeight/2)));
-    lm.style.transform=`perspective(900px) rotateX(${off*7}deg) rotateY(${off*-4}deg)`;
-    raf0=null;
+  if(raf0) return;
+  raf0 = requestAnimationFrame(()=>{
+    const r = lmEl.getBoundingClientRect();
+    const off = Math.max(-1,Math.min(1,(r.top+r.height/2-innerHeight/2)/(innerHeight/2)));
+    lmEl.style.transform = `perspective(900px) rotateX(${off*7}deg) rotateY(${off*-4}deg)`;
+    raf0 = null;
   });
 },{passive:true});
 
-/* ═ APPLE SCROLL ═════════════════════════════════════════ */
-const aw   = document.getElementById('apple-wrap');
-const steps= document.querySelectorAll('.astep');
-const dots = document.querySelectorAll('.adot');
-const aline= document.getElementById('a-line');
-const abg  = document.getElementById('apple-bg');
-window._bgWords = T[curLang].bgWords || ['ТЕХНИКА','ДАННЫЕ','ДОВЕРИЕ','РЕЗУЛЬТАТ'];
-const TOTAL= steps.length;
+/* ═══════════════════════════════════════════════════════════════
+   APPLE SCROLL
+═══════════════════════════════════════════════════════════════ */
+const aw    = document.getElementById('apple-wrap');
+const steps = document.querySelectorAll('.astep');
+const dots  = document.querySelectorAll('.adot');
+const aline = document.getElementById('apple-line');
+const abg   = document.getElementById('apple-bg');
+const TOTAL = steps.length;
 
 let raf1;
-function runApple(){
-  const wRect=aw.getBoundingClientRect();
-  const wH=aw.offsetHeight;
-  const progress=Math.max(0,Math.min(1,-wRect.top/(wH-innerHeight)));
-  aline.style.width=(progress*100)+'%';
+function onAppleScroll(){
+  const wRect = aw.getBoundingClientRect();
+  const wH    = aw.offsetHeight;
+  const progress = Math.max(0,Math.min(1,-wRect.top/(wH-innerHeight)));
 
-  const rawStep=progress*TOTAL;
-  const si=Math.min(Math.floor(rawStep),TOTAL-1);
-  const sp=rawStep-si;
+  aline.style.width = (progress*100)+'%';
 
-  abg.textContent=(window._bgWords||[])[si]||'';
-  abg.style.opacity=(.03+Math.sin(sp*Math.PI)*.02).toString();
+  const rawStep = progress * TOTAL;
+  const si      = Math.min(Math.floor(rawStep), TOTAL-1);
+  const sp      = rawStep - si;
+
+  // Update background word from current language
+  const bgWords = T[currentLang].apple_bg || ['TECH','DATA','TRUST','RESULT'];
+  abg.textContent = bgWords[si] || bgWords[TOTAL-1];
 
   steps.forEach((s,i)=>{
-    if(i===si){
-      const enter=Math.min(1,sp/.25);
-      const exit=i===TOTAL-1?0:Math.max(0,(sp-.75)/.25);
-      const op=enter*(1-exit);
-      const ty=(1-enter)*18-(exit*18);
-      s.style.opacity=op.toString();
-      s.style.transform=`translate(-50%,calc(-50% + ${ty}px))`;
-      s.classList.toggle('on',op>.05);
-    } else if(i<si){
-      s.style.opacity='0';
-      s.style.transform='translate(-50%,calc(-50% - 18px))';
+    if(i === si){
+      const enter = Math.min(1, sp/0.22);
+      const exit  = i === TOTAL-1 ? 0 : Math.max(0,(sp-0.78)/0.22);
+      const op    = enter*(1-exit);
+      const ty    = (1-enter)*18 - (exit*18);
+      s.style.opacity   = op.toString();
+      s.style.transform = `translate(-50%,calc(-50% + ${ty}px))`;
+      s.classList.toggle('on', op > 0.05);
+    } else if(i < si){
+      s.style.opacity   = '0';
+      s.style.transform = 'translate(-50%,calc(-50% - 18px))';
       s.classList.remove('on');
     } else {
-      s.style.opacity='0';
-      s.style.transform='translate(-50%,calc(-50% + 18px))';
+      s.style.opacity   = '0';
+      s.style.transform = 'translate(-50%,calc(-50% + 18px))';
       s.classList.remove('on');
     }
   });
+
   dots.forEach((d,i)=>d.classList.toggle('on',i===si));
 }
+
 window.addEventListener('scroll',()=>{
-  if(raf1)return;
-  raf1=requestAnimationFrame(()=>{runApple();raf1=null;});
+  if(raf1) return;
+  raf1 = requestAnimationFrame(()=>{ onAppleScroll(); raf1=null; });
 },{passive:true});
-runApple();
+onAppleScroll();
 
-/* ═ COUNTER ANIMATION ════════════════════════════════════ */
-function animateCounter(el,target,suffix){
-  let start=null;
-  const dur=1200;
-  function step(ts){
-    if(!start) start=ts;
-    const p=Math.min((ts-start)/dur,1);
-    const val=Math.round(p*target);
-    el.textContent=val+(suffix||'');
-    if(p<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-const cio=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const el=e.target;
-      const target=parseInt(el.getAttribute('data-counter'));
-      const suffix=el.getAttribute('data-suffix')||'';
-      animateCounter(el,target,suffix);
-      cio.unobserve(el);
-    }
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-counter]').forEach(el=>cio.observe(el));
-
-/* ═ FORM ══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   FORM
+═══════════════════════════════════════════════════════════════ */
 function handleSubmit(e){
   e.preventDefault();
-  const ok=document.getElementById('fok');
-  ok.style.display='block';
+  const ok = document.getElementById('fok');
+  ok.style.display = 'block';
   e.target.querySelectorAll('input,textarea,select').forEach(el=>el.value='');
   setTimeout(()=>ok.style.display='none',5000);
 }
